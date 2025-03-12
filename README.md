@@ -1,12 +1,6 @@
 # Crib Ops CLI Tool Documentation
 
-Welcome to the Crib Ops CLI tool! This guide will help you get started quickly with your new CLI. Once you subscribe to Crib Ops, you’ll receive an email with your **license.txt** file. With our macOS and Windows installers, the CLI is automatically added to your PATH. All you need to do is save your license file to a directory of your choosing and run the setup.
-
-We also have a docker version of the cli.  This can be run like:
-
-```bash
-docker run -v "$(pwd):/app" -w /app ghcr.io/cloudbedrock/cribops-cli
-```
+Welcome to the Crib Ops CLI tool! This guide will help you get started quickly with your new CLI. Once you purchase the tool, you’ll receive an email with your **license.txt** file. With our macOS and Windows installers, the CLI is automatically added to your PATH. All you need to do is save your license file to a directory of your choosing and run the setup.
 
 ---
 
@@ -20,6 +14,7 @@ docker run -v "$(pwd):/app" -w /app ghcr.io/cloudbedrock/cribops-cli
 - [Expected Output](#expected-output)
   - [Generated Files Tree](#generated-files-tree)
   - [Example compose.yaml](#example-composeyaml)
+- [Docker Compose Commands](#docker-compose-commands)
 - [Troubleshooting & Support](#troubleshooting--support)
 
 ---
@@ -35,9 +30,16 @@ docker run -v "$(pwd):/app" -w /app ghcr.io/cloudbedrock/cribops-cli
 ## Installation
 
 1. **Download and Install:**  
-   Run the macOS or Windows installer for Crib Ops CLI. The installer adds `cribops-cli` to your system’s PATH.
+   Run the macOS or Windows installer for Crib Ops CLI. The installer adds `cribops-cli` to your system’s PATH. The linux
+   version can be placed manually into an appropriate path of your choosing.
+   
+   You can also run the cribops-cli via docker run if you don't wish to install the cli on your os.
 
-2. **Prepare License File:**  
+   ```bash
+   docker run -v "$(pwd):/app" -w /app ghcr.io/cloudbedrock/cribops-cli
+   ```
+
+3. **Prepare License File:**  
    Save the attached `license.txt` file (from your purchase email) in the directory where you will run the CLI.
 
 ---
@@ -196,9 +198,51 @@ secrets:
 
 ---
 
+## Docker Compose Commands
+
+After generating your `compose.yaml` and secret files, you can use Docker Compose to manage your services. Here are some common commands:
+
+- **Run in Foreground:**  
+  ```bash
+  docker compose up
+  ```
+  This starts all services and streams the logs to your console.
+
+- **Run in Detached Mode:**  
+  ```bash
+  docker compose up -d
+  ```
+  This starts the services in the background.
+
+- **Stop Containers:**  
+  ```bash
+  docker compose stop
+  ```
+  This stops all running containers without removing them.
+
+- **Take Down Containers and Network:**  
+  ```bash
+  docker compose down
+  ```
+  This stops containers and removes the containers, networks, and any created volumes associated with the project.
+
+- **View Logs:**  
+  ```bash
+  docker compose logs
+  ```
+  To follow logs in real time, use:
+  ```bash
+  docker compose logs -f
+  ```
+
+*Note:* If you’re using the legacy Docker Compose (version 1), replace `docker compose` with `docker-compose`.
+
+---
+
 ## Troubleshooting & Support
 
 - **First-Time Setup Only:** Credentials are retrieved only on the first setup. If you have already run the setup and lost your files, please contact [support@cloudbedrock.com](mailto:support@cloudbedrock.com) with your license key.
+- **Self Help License Key Reset will be added shorlty as well as other license management features.
 - **License Issues:** Ensure that your `license.txt` file is placed correctly or that you pass the valid license key as an argument.
 - **Further Help:** For any issues or further assistance, please visit [cribops.com](https://cribops.com) or reach out to our support team.
 
