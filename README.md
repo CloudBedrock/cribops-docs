@@ -29,6 +29,10 @@ Welcome to the Crib Ops CLI tool! This guide will help you get started quickly w
 
 ## Installation
 
+### macOS Installation
+[![Watch the video](https://i.vimeocdn.com/video/1993245817-f626d8e14774e83f7af84d3152f9c14d2cc7e0b7c233beae30c2b59fe9f73c0e-d_640)](https://vimeo.com/1065686377)
+
+
 1. **Download and Install:**  
    Run the macOS or Windows installer for Crib Ops CLI. The installer adds `cribops-cli` to your system’s PATH. The linux
    version can be placed manually into an appropriate path of your choosing.
