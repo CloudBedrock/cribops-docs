@@ -44,11 +44,17 @@ Welcome to the Crib Ops CLI tool! This guide will help you get started quickly w
    Run the macOS or Windows installer for Crib Ops CLI. The installer adds `cribops-cli` to your system’s PATH. The linux
    version can be placed manually into an appropriate path of your choosing.
    
-   You can also run the cribops-cli via docker run if you don't wish to install the cli on your os.
+   You can also run the cribops-cli via docker run if you don't wish to install the cli on your os for linux and mac
 
    ```bash
    docker run -v "$(pwd):/app" -w /app ghcr.io/cloudbedrock/cribops-cli
    ```
+   And for Windows Command Prompt
+
+   ```bat
+   docker run -v "%cd%:/app" -w /app ghcr.io/cloudbedrock/cribops-cli
+   ```
+   
 
 3. **Prepare License File:**  
    Save the attached `license.txt` file (from your purchase email) in the directory where you will run the CLI.
