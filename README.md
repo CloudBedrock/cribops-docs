@@ -1,6 +1,10 @@
 # Crib Ops CLI Tool Documentation
 
-Welcome to the Crib Ops CLI tool! This guide will help you get started quickly with your new CLI. Once you subscribe to [cribops.com](https://cribops.com), you’ll receive an email with your **license.txt** file. With our macOS and Windows installers, the CLI is automatically added to your PATH. All you need to do is save your license file to a directory of your choosing and run the setup.
+Welcome to the Crib Ops CLI tool! This guide will help you get started quickly with your new CLI. The CLI tool now supports N8N docker compose file generation for quick local install of N8N.  The CLI is free to download from this repository in the downloads folder.  Installer for Windows and Mac.
+
+It's also the tool to manage activating a Crib Ops License.  Crib Ops provides a hosted SaaS offering that provides an easy to use front door to your webhooks for N8N or other webhook endpoints for automation.  It provides durable queues for enhancing availability and scalability of your automation services.
+
+Once you subscribe to [cribops.com](https://cribops.com), you’ll receive an email with your **license.txt** file. With our macOS and Windows installers, the CLI is automatically added to your PATH. All you need to do is save your license file to a directory of your choosing and run the setup.
 
 ---
 
@@ -9,12 +13,13 @@ Welcome to the Crib Ops CLI tool! This guide will help you get started quickly w
 - [Prerequisites](#prerequisites)
 - [Installation](#installation)
 - [Getting Started](#getting-started)
-  - [Using the License File](#using-the-license-file)
+  - [Using the License File](#using-the-license-file) (Crib Ops Only)
   - [Passing the License Key as an Argument](#passing-the-license-key-as-an-argument)
 - [Expected Output](#expected-output)
   - [Generated Files Tree](#generated-files-tree)
   - [Example compose.yaml](#example-composeyaml)
 - [Docker Compose Commands](#docker-compose-commands)
+- [n8n Installation & Configuration](#n8n-installation--configuration)
 - [Troubleshooting & Support](#troubleshooting--support)
 
 ---
@@ -255,6 +260,47 @@ After generating your `compose.yaml` and secret files, you can use Docker Compos
 *Note:* If you’re using the legacy Docker Compose (version 1), replace `docker compose` with `docker-compose`.
 
 ---
+### n8n-installation--configuration
+In addition to the Crib Ops setup, the CLI now supports installing n8n with Postgres using Docker Compose. During n8n setup, the CLI will prompt you (or use the defaults) for the following dynamic settings:
+
+WEBHOOK_URL:
+The URL at which n8n will be accessible.
+Default: http://localhost:5678
+Example (FQDN with HTTPS): https://n8n.example.com
+
+N8N_HOST:
+The hostname used by n8n.
+Default: localhost:5676
+Example: n8n.example.com
+
+GENERIC_TIMEZONE:
+The timezone setting for cron and scheduling nodes within n8n.
+Default: America/New_York
+Example: Europe/Berlin
+
+Setup Process for n8n
+Run the CLI:
+Execute the following command in the directory where your license.txt resides:
+
+```bash
+cribops-cli n8n-setup
+```
+This will generate:
+
+A .env file containing the provided values.
+A compose.yaml file with the necessary Docker Compose configuration for n8n and Postgres.
+Review the Generated Files:
+Your directory should now include:
+
+compose.yaml
+.env
+A secrets directory with your secret files.
+Launch n8n:
+Simply run:
+
+```bash
+docker compose -f compose.yaml up -d
+```
 
 ## Troubleshooting & Support
 
