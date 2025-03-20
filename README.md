@@ -302,6 +302,11 @@ Simply run:
 docker compose -f compose.yaml up -d
 ```
 
+Docker Compose will automatically load the .env file, and your n8n service will be configured with the values you provided.
+
+Access n8n:
+Open your browser and navigate to the URL specified by WEBHOOK_URL (default is http://localhost:5678).
+
 ## Troubleshooting & Support
 
 - **First-Time Setup Only:** Credentials are retrieved only on the first setup. If you have already run the setup and lost your files, please contact [support@cloudbedrock.com](mailto:support@cloudbedrock.com) with your license key.
