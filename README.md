@@ -1,6 +1,6 @@
 # Crib Ops CLI Tool Documentation
 
-Welcome to the Crib Ops CLI tool! This guide will help you get started quickly with your new CLI. The CLI tool now supports N8N docker compose file generation for quick local install of N8N.  The CLI is free to download from this repository in the downloads folder.  Installer for Windows and Mac.
+Welcome to the Crib Ops CLI tool! This guide will help you get started quickly with your new CLI. The CLI tool now supports N8N docker compose file generation for quick local install of N8N.  The CLI is free to download from this repository in the downloads folder.  Installer for Windows and Mac.  Our next step is adding the option to install a local LLM along with Quadrant similar to the N8N local ai starter kit but with CLI generation.
 
 It's also the tool to manage activating a Crib Ops License.  Crib Ops provides a hosted SaaS offering that provides an easy to use front door to your webhooks for N8N or other webhook endpoints for automation.  It provides durable queues for enhancing availability and scalability of your automation services.
 
