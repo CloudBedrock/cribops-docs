@@ -50,10 +50,8 @@ Need more help?  Join our new community [Crib Ops on Skool](https://skool.com/cr
 ### Crib Ops Windows Installation
 [![Watch the video](https://i.vimeocdn.com/video/1993258988-b4bdf0e30dc03497db8d2524b86edb46659d7875ee26a476f717b0a861a04f9b-d_640)](https://vimeo.com/1065697602?share=copy)
 
-
-
-
-
+### Using N8N with HighLevel at Scale - Integration On Steroids
+[![Watch the video](https://img.youtube.com/vi/JoWJaDgFPAE/hqdefault.jpg)](https://youtu.be/JoWJaDgFPAE?si=34DpfgC-tIaeVycA)
 
 
 
