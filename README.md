@@ -6,6 +6,7 @@ It's also the tool to manage activating a Crib Ops License.  Crib Ops provides a
 
 Once you subscribe to [cribops.com](https://cribops.com), you’ll receive an email with your **license.txt** file. With our macOS and Windows installers, the CLI is automatically added to your PATH. All you need to do is save your license file to a directory of your choosing and run the setup.
 
+Need more help?  Join our new community [Crib Ops on Skool](https://skool.com/cribops) 
 ---
 
 ## Table of Contents
