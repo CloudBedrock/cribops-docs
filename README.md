@@ -36,10 +36,10 @@ Need more help?  Join our new community [Crib Ops on Skool](https://skool.com/cr
 ## Installation
 
 
-### N8N Easy Install macOS
+### N8N Easy Install Windows
 [![Watch the video](https://img.youtube.com/vi/XKbNmytgwz4/hqdefault.jpg)](https://youtu.be/XKbNmytgwz4)
 
-### N8N Easy Install Windows
+### N8N Easy Install macOS
 [![Watch the video](https://img.youtube.com/vi/XnsjeuT6LXE/hqdefault.jpg)](https://youtu.be/XnsjeuT6LXE)
 
 
