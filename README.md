@@ -1,8 +1,14 @@
 # Crib Ops CLI Tool Documentation
 
-Welcome to the Crib Ops CLI tool! This guide will help you get started quickly with your new CLI. The CLI tool now supports N8N docker compose file generation for quick local install of N8N.  The CLI is free to download from this repository in the downloads folder.  Installer for Windows and Mac.  Our next step is adding the option to install a local LLM along with Quadrant similar to the N8N local ai starter kit but with CLI generation.
+Welcome to the Crib Ops CLI tool! This guide will help you get started quickly with your new CLI. 
+
+The CLI tool now supports N8N docker compose file generation for quick local install of Crib Ops, N8N  as well as combining both the community and licensed verison of Crib Ops with shared postgres db and N8N community edition for convenience. 
+
+The CLI is free to download from this repository in the downloads folder.  Installer for Windows and Mac.  
 
 It's also the tool to manage activating a Crib Ops License.  Crib Ops provides a hosted SaaS offering that provides an easy to use front door to your webhooks for N8N or other webhook endpoints for automation.  It provides durable queues for enhancing availability and scalability of your automation services.
+
+The community edtion of crib ops does not require a license.  Features coming this week are the ability to automatically add a connection to the included postgres database to your N8N node and adding example workflows leveraging for things like memory and other database functionalty.  Credentials for the database are generated upon running the cli and can be referenced via the files written upon generating your compose file.
 
 Once you subscribe to [cribops.com](https://cribops.com), you’ll receive an email with your **license.txt** file. With our macOS and Windows installers, the CLI is automatically added to your PATH. All you need to do is save your license file to a directory of your choosing and run the setup.
 
@@ -86,6 +92,19 @@ Simply place your `license.txt` in your working directory and run the following 
 ```bash
 cribops-cli setup
 ```
+
+### Installing the Community Edition of Crib Ops with N8N
+
+```bash
+cribops-cli setup --unlicensed --include-n8n
+```
+
+### Getting Help on Setup Options
+```bash
+cribops-cli setup -h
+```
+
+
 
 The tool will:
 - Read your `license.txt` file.
