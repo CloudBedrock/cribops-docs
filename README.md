@@ -26,7 +26,6 @@ Need more help?  Join our new community [Crib Ops on Skool](https://skool.com/cr
   - [Generated Files Tree](#generated-files-tree)
   - [Example compose.yaml](#example-composeyaml)
 - [Docker Compose Commands](#docker-compose-commands)
-- [n8n Installation & Configuration](#n8n-installation--configuration)
 - [Troubleshooting & Support](#troubleshooting--support)
 
 ---
@@ -293,61 +292,6 @@ After generating your `compose.yaml` and secret files, you can use Docker Compos
   ```
 
 *Note:* If you’re using the legacy Docker Compose (version 1), replace `docker compose` with `docker-compose`.
-
----
-### n8n-installation--configuration
-In addition to the Crib Ops setup, the CLI now supports installing n8n with Postgres using Docker Compose. During n8n setup, the CLI will prompt you (or use the defaults) for the following dynamic settings:
-
-WEBHOOK_URL:
-The URL at which n8n will be accessible.
-Default: http://localhost:5678
-Example (FQDN with HTTPS): https://n8n.example.com
-
-N8N_HOST:
-The hostname used by n8n.
-Default: localhost:5676
-Example: n8n.example.com
-
-GENERIC_TIMEZONE:
-The timezone setting for cron and scheduling nodes within n8n.
-Default: America/New_York
-Example: Europe/Berlin
-
-Setup Process for n8n
-Run the CLI:
-Execute the following command in the directory where your license.txt resides:
-
-```bash
-cribops-cli n8n-setup
-```
-This will generate:
-
-A .env file containing the provided values.
-A compose.yaml file with the necessary Docker Compose configuration for n8n and Postgres.
-Review the Generated Files:
-Your directory should now include:
-
-compose.yaml
-.env
-A secrets directory with your secret files.
-Launch n8n:
-Simply run:
-
-```bash
-docker compose -f compose.yaml up -d
-```
-
-Docker Compose will automatically load the .env file, and your n8n service will be configured with the values you provided.
-
-Access n8n:
-Open your browser and navigate to the URL specified by WEBHOOK_URL (default is http://localhost:5678).
-
-## Troubleshooting & Support
-
-- **First-Time Setup Only:** Credentials are retrieved only on the first setup. If you have already run the setup and lost your files, please contact [support@cloudbedrock.com](mailto:support@cloudbedrock.com) with your license key.
-- **Self Help License Key Reset will be added shorlty as well as other license management features.
-- **License Issues:** Ensure that your `license.txt` file is placed correctly or that you pass the valid license key as an argument.
-- **Further Help:** For any issues or further assistance, please visit [cribops.com](https://cribops.com) or reach out to our support team.
 
 ---
 
