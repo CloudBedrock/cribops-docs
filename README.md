@@ -4,11 +4,13 @@ Welcome to the Crib Ops CLI tool! This guide will help you get started quickly w
 
 The CLI tool now supports N8N docker compose file generation for quick local install of Crib Ops, N8N  as well as combining both the community and licensed verison of Crib Ops with shared postgres db and N8N community edition for convenience. 
 
-The CLI is free to download from this repository in the downloads folder.  Installer for Windows and Mac.  
+The CLI is free to download from this repository in the downloads folder.  Installer for Windows and Mac.  Or just use the docker run commands listed below to run it instantly with no install. 
 
 It's also the tool to manage activating a Crib Ops License.  Crib Ops provides a hosted SaaS offering that provides an easy to use front door to your webhooks for N8N or other webhook endpoints for automation.  It provides durable queues for enhancing availability and scalability of your automation services.
 
-The community edtion of crib ops does not require a license.  Features coming this week are the ability to automatically add a connection to the included postgres database to your N8N node and adding example workflows leveraging for things like memory and other database functionalty.  Credentials for the database are generated upon running the cli and can be referenced via the files written upon generating your compose file.
+The community edtion of crib ops DOES NOT require a license!  
+
+Features coming this week are the ability to automatically add a connection to the included postgres database to your N8N node and adding example workflows leveraging for things like memory and other database functionalty.  Credentials for the database are generated upon running the cli and can be referenced via the files written upon generating your compose file.
 
 Once you subscribe to [cribops.com](https://cribops.com), you’ll receive an email with your **license.txt** file. With our macOS and Windows installers, the CLI is automatically added to your PATH. All you need to do is save your license file to a directory of your choosing and run the setup.
 
