@@ -68,13 +68,27 @@ Need more help?  Join our new community [Crib Ops on Skool](https://skool.com/cr
    
    You can also run the cribops-cli via docker run if you don't wish to install the cli on your os for linux and mac
 
-   ```bash
+   macOS/Linux
+   
+    ```bash
    docker run --rm -v "$(pwd):/app" -w /app ghcr.io/cloudbedrock/cribops-cli
    ```
-   And for Windows Command Prompt
+   Windows Command Prompt
 
    ```bat
    docker run --rm -v "%cd%:/app" -w /app ghcr.io/cloudbedrock/cribops-cli
+   ```
+
+   Community Edition Installation (crib ops, N8N and Postgres)
+
+   macOS/Linux
+    ```bash
+   docker run --rm -v "$(pwd):/app" -w /app ghcr.io/cloudbedrock/cribops-cli setup --unlicensed --include-n8n
+   ```
+   Windows Command Prompt
+
+   ```bat
+   docker run --rm -v "%cd%:/app" -w /app ghcr.io/cloudbedrock/cribops-cli --unlicensed --include-n8n
    ```
    
 
