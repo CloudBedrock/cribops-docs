@@ -2,6 +2,17 @@
 
 Welcome to the Crib Ops CLI tool! This guide will help you get started quickly with your new CLI. 
 
+## Downloads
+
+For users of different operating systems, we provide specific builds of CribOps CLI. Choose the one that matches your system:
+
+- **MacOS Version**
+  - [Download CribOps CLI for MacOS](downloads/cribops-cli-mac-2.3.22.zip)
+
+- **Windows Version**
+  - [Download CribOps CLI for Windows](downloads/cribops-cli-windos-2.3.22.zip)
+
+
 The CLI tool now supports N8N docker compose file generation for quick local install of Crib Ops, N8N  as well as combining both the community and licensed verison of Crib Ops with shared postgres db and N8N community edition for convenience. 
 
 The CLI is free to download from this repository in the downloads folder.  Installer for Windows and Mac.  Or just use the docker run commands listed below to run it instantly with no install. 
