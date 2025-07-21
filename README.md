@@ -26,8 +26,6 @@ Need more help?  Join our new community [Crib Ops on Skool](https://skool.com/cr
 - [Prerequisites](#prerequisites)
 - [Installation](#installation)
 - [Getting Started](#getting-started)
-  - [Using the License File](#using-the-license-file) (Crib Ops Only)
-  - [Passing the License Key as an Argument](#passing-the-license-key-as-an-argument)
 - [Expected Output](#expected-output)
   - [Generated Files Tree](#generated-files-tree)
   - [Example compose.yaml](#example-composeyaml)
