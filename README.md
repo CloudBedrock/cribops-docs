@@ -52,10 +52,6 @@ Need more help?  Join our new community [Crib Ops on Skool](https://skool.com/cr
 ### N8N Easy Install macOS
 [![Watch the video](https://img.youtube.com/vi/XnsjeuT6LXE/hqdefault.jpg)](https://youtu.be/XnsjeuT6LXE)
 
-### Using N8N with HighLevel at Scale - Integration On Steroids
-[![Watch the video](https://img.youtube.com/vi/JoWJaDgFPAE/hqdefault.jpg)](https://youtu.be/JoWJaDgFPAE?si=34DpfgC-tIaeVycA)
-
-
 
 1. **Download and Install:**  
    Run the macOS or Windows installer for Crib Ops CLI. The installer adds `cribops-cli` to your system’s PATH. The linux
