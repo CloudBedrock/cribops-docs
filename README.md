@@ -35,13 +35,14 @@ Need more help? Join our new community [Crib Ops on Skool](https://skool.com/cri
 - [Prerequisites](#prerequisites)
 - [Installation](#installation)
 - [Getting Started](#getting-started)
-- [NEW: Cloudflare Tunnel Setup](#cloudflare-tunnel-setup)
-- [NEW: Database Management](#database-management)
+- [NEW: Cloudflare Tunnel Setup](#new-cloudflare-tunnel-setup)
+- [NEW: Database Management](#new-database-management)
 - [Expected Output](#expected-output)
   - [Generated Files Tree](#generated-files-tree)
   - [Example compose.yaml](#example-composeyaml)
 - [Docker Compose Commands](#docker-compose-commands)
 - [Troubleshooting & Support](#troubleshooting--support)
+- [Recent Changes](#recent-changes-v2133)
 
 ---
 
@@ -218,18 +219,15 @@ This allows you to extend n8n with community-contributed nodes for additional in
 ### Generated Files Tree
 ```
 .
-├── compose.yaml              # Docker Compose configuration
-├── .env                      # Environment variables
-├── .gitignore               # Updated with secrets/, .env, n8n-credentials/
-├── init-dbs.sql             # Database initialization (creates 4 databases)
-├── secrets/                 # Directory containing secrets
-│   └── .postgrespassword    # PostgreSQL password file
-├── n8n-credentials/         # Pre-configured n8n database credentials
-│   ├── postgres-n8n.json
-│   ├── postgres-cribops_memory.json
-│   ├── postgres-cribops_crm.json
-│   └── postgres-cribops_rag.json
-└── [tunnel-name]-config.yml  # Cloudflare tunnel config (if using tunnel)
+├── compose.yaml                      # Docker Compose configuration
+├── .env                              # Environment variables (includes POSTGRES_PORT)
+├── .gitignore                        # Updated with secrets/, .env, and local files
+├── init-dbs.sql                      # Database initialization (creates 3 databases)
+├── secrets/                          # Directory containing secrets
+│   └── .postgrespassword             # PostgreSQL password file
+└── (Optional with Cloudflare tunnel)
+    ├── [tunnel-name]-config.yml      # Tunnel configuration (e.g., n8n6-config.yml)
+    └── .cloudflared-[tunnel-name].json  # Local tunnel credentials (e.g., .cloudflared-n8n6.json)
 ```
 
 ### Example compose.yaml
