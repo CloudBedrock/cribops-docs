@@ -2,6 +2,8 @@
 
 Welcome to the Crib Ops CLI tool! This guide will help you get started quickly with your new CLI. 
 
+Need more help? Join our new community [Crib Ops on Skool](https://skool.com/cribops) 
+
 ## Downloads
 
 For users of different operating systems, we provide specific builds of CribOps CLI. Choose the one that matches your system:
@@ -26,7 +28,7 @@ The CLI tool now supports:
 
 The CLI is free to download from this repository in the downloads folder. Installer for Windows and Mac. Or just use the docker run commands listed below to run it instantly with no install.
 
-Need more help? Join our new community [Crib Ops on Skool](https://skool.com/cribops) 
+
 
 ---
 
