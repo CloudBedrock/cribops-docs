@@ -62,7 +62,7 @@ The CLI is free to download from this repository in the downloads folder. Instal
 * See Cribops.com for details.
 
 ### N8N Easy Install
-[![Watch the video](https://img.youtube.com/vi/OEyuTy4KauA/hqdefault.jpg)]([https://youtu.be/XnsjeuT6LXE](https://youtu.be/OEyuTy4KauA))
+[![Watch the video](https://img.youtube.com/vi/OEyuTy4KauA/hqdefault.jpg)](https://youtu.be/OEyuTy4KauA?si=F2J7pT4n8iiU0efZ)
 
 1. **Download and Install:**  
    Run the macOS or Windows installer for Crib Ops CLI. The installer adds `cribops-cli` to your system's PATH. The linux
