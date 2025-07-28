@@ -4,6 +4,9 @@ Welcome to the Crib Ops CLI tool! This guide will help you get started quickly w
 
 Need more help? Join our new community [Crib Ops on Skool](https://skool.com/cribops) 
 
+### N8N Easy Install
+[![Watch the video](https://img.youtube.com/vi/OEyuTy4KauA/hqdefault.jpg)](https://youtu.be/OEyuTy4KauA?si=F2J7pT4n8iiU0efZ)
+
 ## Downloads
 
 For users of different operating systems, we provide specific builds of CribOps CLI. Choose the one that matches your system:
@@ -60,9 +63,6 @@ The CLI is free to download from this repository in the downloads folder. Instal
 
 * Note: references to license.txt install is deprecated. CribOps is now offered as a hosted SaaS vs requiring installation and hosting yourself and works with community cribops node
 * See Cribops.com for details.
-
-### N8N Easy Install
-[![Watch the video](https://img.youtube.com/vi/OEyuTy4KauA/hqdefault.jpg)](https://youtu.be/OEyuTy4KauA?si=F2J7pT4n8iiU0efZ)
 
 1. **Download and Install:**  
    Run the macOS or Windows installer for Crib Ops CLI. The installer adds `cribops-cli` to your system's PATH. The linux
