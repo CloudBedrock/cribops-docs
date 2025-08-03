@@ -28,6 +28,7 @@ The CLI tool now supports:
 - **NEW: API-based credential setup for PostgreSQL databases**
 - **NEW: Automatic DNS route refresh for existing tunnels (fixes Error 1033)**
 - **NEW: Local tunnel credential storage for better portability**
+- **NEW: CribOps account users have access to connect to their public webhooks as an additional destination and print to console or redirect the payload to another url
 
 The CLI is free to download from this repository in the downloads folder. Installer for Windows and Mac. Or just use the docker run commands listed below to run it instantly with no install.
 
