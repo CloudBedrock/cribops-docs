@@ -15,7 +15,7 @@ For users of different operating systems, we provide specific builds of CribOps 
   - [Download CribOps CLI for MacOS](https://github.com/cloudbedrock/cribops-docs/raw/main/downloads/cribops-cli-mac-2.16.0.zip)
 
 - **Windows Version**
-  - [Download CribOps CLI for Windows](https://github.com/cloudbedrock/cribops-docs/raw/main/downloads/cribops-cli-windows-2.16.0.zip)
+  - [Download CribOps CLI for Windows](https://github.com/cloudbedrock/cribops-docs/raw/main/downloads/cribops-cli-windows-2.19.7.zip)
 
 The CLI tool now supports:
 - N8N docker compose file generation for quick local install
