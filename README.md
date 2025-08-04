@@ -1,503 +1,384 @@
-# Crib Ops CLI Tool Documentation
+  Crib Ops CLI Tool Documentation
 
-Welcome to the Crib Ops CLI tool! This guide will help you get started quickly with your new CLI. 
+  Welcome to the Crib Ops CLI tool! Deploy N8N locally with Docker or scale to production-ready AWS infrastructure with a single command.
 
-Need more help? Join our new community [Crib Ops on Skool](https://skool.com/cribops) 
+  Need more help? Join our new community https://skool.com/cribops
 
-### N8N Easy Install
-[![Watch the video](https://img.youtube.com/vi/OEyuTy4KauA/hqdefault.jpg)](https://youtu.be/OEyuTy4KauA?si=F2J7pT4n8iiU0efZ)
+  N8N Easy Install & AWS Cloud Deployment
 
-## Downloads
+  https://youtu.be/OEyuTy4KauA?si=F2J7pT4n8iiU0efZ
 
-For users of different operating systems, we provide specific builds of CribOps CLI. Choose the one that matches your system:
+  Downloads
 
-- **MacOS Version**
-  - [Download CribOps CLI for MacOS](https://github.com/cloudbedrock/cribops-docs/raw/main/downloads/cribops-cli-mac-2.30.8.zip)
+  For users of different operating systems, we provide specific builds of CribOps CLI. Choose the one that matches your system:
 
-- **Windows Version**
-  - [Download CribOps CLI for Windows](https://github.com/cloudbedrock/cribops-docs/raw/main/downloads/cribops-cli-windows-2.19.8.zip)
+  - MacOS Version
+    - https://github.com/cloudbedrock/cribops-docs/raw/main/downloads/cribops-cli-mac-2.30.8.zip
+  - Windows Version
+    - https://github.com/cloudbedrock/cribops-docs/raw/main/downloads/cribops-cli-windows-2.19.8.zip
 
-The CLI tool now supports:
-- N8N docker compose file generation for quick local install
-- PostgreSQL with PGVector support
-- **NEW: Cloudflare Zero Trust tunnel integration for secure webhook access**
-- **NEW: Pre-configured CribOps databases (memory, CRM, RAG)**
-- **NEW: TablePlus GUI integration for database management**
-- **NEW: Custom port support for multiple n8n instances**
-- **NEW: Community packages tool usage enabled by default**
-- **NEW: API-based credential setup for PostgreSQL databases**
-- **NEW: Automatic DNS route refresh for existing tunnels (fixes Error 1033)**
-- **NEW: Local tunnel credential storage for better portability**
-- **NEW: CribOps account users have access to connect to their public webhooks as an additional destination and print to console or redirect the payload to another url
+  The CLI tool now supports:
 
-The CLI is free to download from this repository in the downloads folder. Installer for Windows and Mac. Or just use the docker run commands listed below to run it instantly with no install.
+  🐳 Local Development
 
+  - N8N docker compose file generation for quick local install
+  - PostgreSQL with PGVector support
+  - Cloudflare Zero Trust tunnel integration for secure webhook access
+  - Pre-configured CribOps databases (memory, CRM, RAG)
+  - TablePlus GUI integration for database management
+  - Custom port support for multiple n8n instances
+  - Community packages tool usage enabled by default
+  - API-based credential setup for PostgreSQL databases
 
+  ☁️ NEW: AWS Cloud Production Deployment
 
----
+  - One-command AWS infrastructure setup with cribops-cli deploy aws init
+  - Production-ready Aurora PostgreSQL with automatic backups
+  - Auto-scaling ECS containers with load balancer
+  - Private database access via secure SSM tunneling
+  - Real-time deployment monitoring with live status updates
+  - Zero-downtime operations including scaling and redeployments
+  - Automatic SSL certificates and DNS management
+  - Cost-optimized architecture starting from ~$50/month
 
-## Table of Contents
+  The CLI is free to download from this repository in the downloads folder. Installer for Windows and Mac. Or just use the docker run commands listed below to run it instantly with no install.
 
-- [Prerequisites](#prerequisites)
-- [Installation](#installation)
-- [Getting Started](#getting-started)
-- [NEW: Cloudflare Tunnel Setup](#new-cloudflare-tunnel-setup)
-- [NEW: Database Management](#new-database-management)
-- [Expected Output](#expected-output)
-  - [Generated Files Tree](#generated-files-tree)
-  - [Example compose.yaml](#example-composeyaml)
-- [Docker Compose Commands](#docker-compose-commands)
-- [Troubleshooting & Support](#troubleshooting--support)
-- [Recent Changes](#recent-changes-v2133)
+  ---
+  Table of Contents
 
----
+  - #prerequisites
+  - #installation
+  - #-new-aws-cloud-deployment
+  - #-local-development-setup
+  - #getting-started-locally
+  - #cloudflare-tunnel-setup
+  - #database-management
+  - #expected-output
+  - #docker-compose-commands
+  - #troubleshooting--support
+  - #recent-changes
 
-## Prerequisites
+  ---
+  Prerequisites
 
-- **Docker:** Ensure Docker is installed and running
-- **Installers:** Use the provided macOS or Windows installer which installs the CLI and adds it to your PATH
-- **Cloudflare Account (Optional):** For tunnel setup, you'll need a Cloudflare account with a domain
+  - Docker: Ensure Docker is installed and running (for local development)
+  - AWS CLI: For cloud deployments, install and configure AWS CLI with appropriate permissions
+  - Installers: Use the provided macOS or Windows installer which installs the CLI and adds it to your PATH
+  - Cloudflare Account (Optional): For tunnel setup, you'll need a Cloudflare account with a domain
 
----
+  ---
+  Installation
 
-## Installation
+  1. Download and Install:Run the macOS or Windows installer for Crib Ops CLI. The installer adds cribops-cli to your system's PATH.
 
-* Note: references to license.txt install is deprecated. CribOps is now offered as a hosted SaaS vs requiring installation and hosting yourself and works with community cribops node
-* See Cribops.com for details.
+  1. You can also run the cribops-cli via docker run if you don't wish to install the cli on your OS:
 
-1. **Download and Install:**  
-   Run the macOS or Windows installer for Crib Ops CLI. The installer adds `cribops-cli` to your system's PATH. The linux
-   version can be placed manually into an appropriate path of your choosing.
-   
-   You can also run the cribops-cli via docker run if you don't wish to install the cli on your os for linux and mac
+  1. macOS/Linux:
+  docker run --rm -v "$(pwd):/app" -w /app ghcr.io/cloudbedrock/cribops-cli setup -h
 
-   macOS/Linux
-   
-   ```bash
-   docker run --rm -v "$(pwd):/app" -w /app ghcr.io/cloudbedrock/cribops-cli setup -h
-   ```
-   
-   Windows Command Prompt
+  1. Windows Command Prompt:
+  docker run --rm -v "%cd%:/app" -w /app ghcr.io/cloudbedrock/cribops-cli setup -h
 
-   ```bat
-   docker run --rm -v "%cd%:/app" -w /app ghcr.io/cloudbedrock/cribops-cli setup -h
-   ```
+  ---
+  🚀 NEW: AWS Cloud Deployment
 
----
+  Deploy production-ready N8N infrastructure to AWS with enterprise-grade security and scalability!
 
-## Getting Started
+  ☁️ One-Command Deployment
 
-### Getting Help on Setup Options
-```bash
-cribops-cli setup -h
-```
+  # Deploy complete AWS infrastructure
+  cribops-cli deploy aws init
 
-### Basic Setup
-```bash
-# Simple local setup
-cribops-cli setup
+  # Check deployment status
+  cribops-cli deploy aws status
 
-# Setup with custom port (for multiple instances)
-cribops-cli setup --n8n-port 5679
+  # Connect to database securely
+  cribops-cli deploy aws db connect
 
-# Setup with custom PostgreSQL port
-cribops-cli setup --postgres-port 5433
-```
+  🏗️ What Gets Deployed
 
----
+  Complete AWS Infrastructure:
+  - VPC with public/private subnets across availability zones
+  - Application Load Balancer with SSL termination
+  - ECS Fargate auto-scaling container service
+  - Aurora PostgreSQL with automated backups and encryption
+  - Route 53 DNS management with your custom domain
+  - Bastion instance for secure database access
+  - CloudWatch logging and monitoring
 
-## NEW: Cloudflare Tunnel Setup
+  Enterprise Security:
+  - Private database in isolated subnets
+  - No direct internet access to database
+  - SSM tunneling for secure administrative access
+  - AWS Secrets Manager for credential rotation
+  - IAM roles with least privilege access
 
-Expose your n8n instance securely to the internet for webhooks without port forwarding!
+  📊 Real-Time Management
 
-### Prerequisites
-1. Install cloudflared:
-   - **macOS:** `brew install cloudflared`
-   - **Windows:** Download from [Cloudflare](https://github.com/cloudflare/cloudflared/releases)
-   - **Linux:** `wget -q https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64.deb && sudo dpkg -i cloudflared-linux-amd64.deb`
+  # View complete deployment status
+  cribops-cli deploy aws status
+  # Shows: Stack info, resource counts, service health, URLs
 
-2. Have a domain managed by Cloudflare
+  # Scale your deployment
+  cribops-cli deploy aws scale 2
+  # Scales to 2 N8N instances for high availability
 
-### Quick Setup
-```bash
-# Interactive setup (prompts for tunnel name and hostname)
-cribops-cli setup --cloudflare-tunnel
+  # Zero-downtime deployments
+  cribops-cli deploy aws redeploy
+  # Rolling update with no service interruption
 
-# One-line setup (no prompts!)
-cribops-cli setup --cloudflare-tunnel --tunnel-name my-n8n --tunnel-hostname n8n.example.com
+  # Secure database access
+  cribops-cli deploy aws db connect --auto-open
+  # Opens TablePlus with secure tunnel automatically
 
-# Multiple instances with different ports and tunnels
-cribops-cli setup --n8n-port 5679 --postgres-port 5433 --cloudflare-tunnel --tunnel-name n8n-dev --tunnel-hostname n8n-dev.example.com
-```
+  💰 Cost-Optimized Architecture
 
-### What Happens
-1. Browser opens for Cloudflare authentication (first time only)
-2. Creates a secure tunnel to your local n8n
-3. Configures DNS automatically
-4. Sets up HTTPS with your custom domain
-5. Includes cloudflared service in docker-compose
+  Starting from approximately $50-80/month for production workloads:
+  - Aurora Serverless PostgreSQL
+  - ECS Fargate containers (pay per use)
+  - Application Load Balancer
+  - Minimal data transfer costs
+  - No NAT gateway fees (optimized routing)
 
-Your n8n will be accessible at `https://n8n.example.com` with all Cloudflare security features!
+  🔒 Secure Database Access
 
----
+  No more IP whitelisting! Access your private database securely:
 
-## NEW: Database Management
+  # Connect with TablePlus auto-launch
+  cribops-cli deploy aws db connect --auto-open
 
-CribOps CLI now creates **4 pre-configured PostgreSQL databases** with n8n credentials ready to use:
+  # Connect on custom port
+  cribops-cli deploy aws db connect --port 5433
 
-### Available Databases
-- **n8n** - System database for workflows and credentials
-- **cribops_memory** - Long-term memory storage for AI agents
-- **cribops_crm** - Customer relationship management data
-- **cribops_rag** - Vector storage for RAG (Retrieval Augmented Generation)
+  # View connection details
+  cribops-cli deploy aws status
 
-### TablePlus Integration
-
-Open any database in TablePlus GUI with a single command:
-
-```bash
-# Open default n8n database
-cribops-cli db open
-
-# Open specific database
-cribops-cli db open memory
-cribops-cli db open crm
-cribops-cli db open rag
-
-# List all available databases
-cribops-cli db list
-```
-
-**Features:**
-- Works on macOS, Windows, and Linux
-- Automatic password retrieval from `.env`
-- Pre-configured connection with CribOps branding
-- Falls back to manual URL if TablePlus not installed
-
-### Using Databases in n8n
-After setup, you'll find pre-configured credentials in n8n:
-- CribOps - n8n System
-- CribOps - Memory
-- CribOps - CRM
-- CribOps - RAG
-
-Just select the appropriate credential when creating PostgreSQL nodes in your workflows!
-
-### API-Based Credential Setup
-
-You can also create PostgreSQL credentials automatically using the n8n API:
-
-```bash
-# Create credentials using n8n API key
-cribops-cli db setup-credentials YOUR_API_KEY
-
-# This will:
-# 1. Create all CribOps databases if they don't exist
-# 2. Set up PostgreSQL credentials in n8n for each database
-```
-
-To get your n8n API key:
-1. Go to your n8n instance settings
-2. Navigate to "API" section
-3. Generate or copy your API key
-
----
-
-## Community Packages
-
-n8n is configured with `N8N_COMMUNITY_PACKAGES_ALLOW_TOOL_USAGE=true` by default, which enables:
-- Installation of community nodes from npm
-- Access to extended functionality beyond core n8n nodes
-- Integration with specialized tools and services
-
-This allows you to extend n8n with community-contributed nodes for additional integrations and capabilities.
-
----
-
-## Expected Output
-
-### Generated Files Tree
-```
-.
-├── compose.yaml                      # Docker Compose configuration
-├── .env                              # Environment variables (includes POSTGRES_PORT)
-├── .gitignore                        # Updated with secrets/, .env, and local files
-├── init-dbs.sql                      # Database initialization (creates 3 databases)
-├── secrets/                          # Directory containing secrets
-│   └── .postgrespassword             # PostgreSQL password file
-└── (Optional with Cloudflare tunnel)
-    ├── [tunnel-name]-config.yml      # Tunnel configuration (e.g., n8n6-config.yml)
-    └── .cloudflared-[tunnel-name].json  # Local tunnel credentials (e.g., .cloudflared-n8n6.json)
-```
-
-### Example compose.yaml
-
-**Standard setup (without Cloudflare tunnel):**
-```yaml
-version: '3.8'
-
-services:
-  postgres:
-    image: ghcr.io/cloudbedrock/postgres:latest
-    restart: always
-    ports:
-      - "${POSTGRES_PORT:-5432}:5432"  # Optional external access
-    environment:
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
-      POSTGRES_USER: postgres
-      POSTGRES_DB: n8n
-      PGDATA: /var/lib/postgresql/data/pgdata
-    volumes:
-      - postgres_data:/var/lib/postgresql/data
-      - ./init-dbs.sql:/docker-entrypoint-initdb.d/init-dbs.sql
-    healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U postgres"]
-      interval: 10s
-      timeout: 5s
-      retries: 5
-    networks:
-      - n8n-network
-
-  n8n:
-    image: ${N8N_IMAGE:-n8nio/n8n:latest}
-    restart: always
-    environment:
-      DB_TYPE: postgresdb
-      DB_POSTGRESDB_DATABASE: n8n
-      DB_POSTGRESDB_HOST: postgres
-      DB_POSTGRESDB_PORT: 5432
-      DB_POSTGRESDB_USER: postgres
-      DB_POSTGRESDB_PASSWORD: ${DB_POSTGRESDB_PASSWORD}
-      DB_POSTGRESDB_SCHEMA: public
-      WEBHOOK_URL: ${WEBHOOK_URL}
-      N8N_HOST: ${N8N_HOST}
-      GENERIC_TIMEZONE: ${GENERIC_TIMEZONE}
-      N8N_RUNNERS_ENABLED: ${N8N_RUNNERS_ENABLED:-true}
-      N8N_ENCRYPTION_KEY: ${N8N_ENCRYPTION_KEY}
-      N8N_COMMUNITY_PACKAGES_ALLOW_TOOL_USAGE: ${N8N_COMMUNITY_PACKAGES_ALLOW_TOOL_USAGE:-true}
-    ports:
-      - "5678:5678"
-    volumes:
-      - n8n_data:/home/node/.n8n
-      - ./n8n-credentials:/home/node/.n8n/credentials
-    depends_on:
-      postgres:
-        condition: service_healthy
-    networks:
-      - n8n-network
-
-volumes:
-  postgres_data:
-  n8n_data:
-
-networks:
-  n8n-network:
-    driver: bridge
-```
-
-**With Cloudflare tunnel:**
-```yaml
-version: '3.8'
-
-services:
-  cloudflared:
-    image: cloudflare/cloudflared:latest
-    restart: always
-    command: tunnel --config /etc/cloudflared/config.yml run
-    volumes:
-      - ./[tunnel-name]-config.yml:/etc/cloudflared/config.yml:ro
-      - ./.cloudflared-[tunnel-name].json:/etc/cloudflared/credentials.json:ro
-    networks:
-      - n8n-network
-
-  postgres:
-    image: ghcr.io/cloudbedrock/postgres:latest
-    restart: always
-    ports:
-      - "${POSTGRES_PORT:-5432}:5432"  # Optional external access
-    environment:
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
-      POSTGRES_USER: postgres
-      POSTGRES_DB: n8n
-      PGDATA: /var/lib/postgresql/data/pgdata
-    volumes:
-      - postgres_data:/var/lib/postgresql/data
-      - ./init-dbs.sql:/docker-entrypoint-initdb.d/init-dbs.sql
-    healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U postgres"]
-      interval: 10s
-      timeout: 5s
-      retries: 5
-    networks:
-      - n8n-network
-
-  n8n:
-    image: ${N8N_IMAGE:-n8nio/n8n:latest}
-    restart: always
-    environment:
-      DB_TYPE: postgresdb
-      DB_POSTGRESDB_DATABASE: n8n
-      DB_POSTGRESDB_HOST: postgres
-      DB_POSTGRESDB_PORT: 5432
-      DB_POSTGRESDB_USER: postgres
-      DB_POSTGRESDB_PASSWORD: ${DB_POSTGRESDB_PASSWORD}
-      DB_POSTGRESDB_SCHEMA: public
-      WEBHOOK_URL: ${WEBHOOK_URL}
-      N8N_HOST: ${N8N_HOST}
-      GENERIC_TIMEZONE: ${GENERIC_TIMEZONE}
-      N8N_RUNNERS_ENABLED: ${N8N_RUNNERS_ENABLED:-true}
-      N8N_ENCRYPTION_KEY: ${N8N_ENCRYPTION_KEY}
-      N8N_COMMUNITY_PACKAGES_ALLOW_TOOL_USAGE: ${N8N_COMMUNITY_PACKAGES_ALLOW_TOOL_USAGE:-true}
-    ports:
-      - "5678:5678"
-    volumes:
-      - n8n_data:/home/node/.n8n
-      - ./n8n-credentials:/home/node/.n8n/credentials
-    depends_on:
-      postgres:
-        condition: service_healthy
-    networks:
-      - n8n-network
-
-volumes:
-  postgres_data:
-  n8n_data:
-
-networks:
-  n8n-network:
-    driver: bridge
-```
-
-### Example .env file
-```
-POSTGRES_PASSWORD=<generated-32-character-hex>
-DB_POSTGRESDB_PASSWORD=<same-as-above>
-WEBHOOK_URL=http://localhost:5678
-N8N_HOST=localhost:5678
-GENERIC_TIMEZONE=America/New_York
-N8N_RUNNERS_ENABLED=true
-N8N_ENCRYPTION_KEY=<generated-128-character-hex>
-N8N_COMMUNITY_PACKAGES_ALLOW_TOOL_USAGE=true
-N8N_ENFORCE_SETTINGS_FILE_PERMISSIONS=true
-N8N_PUBLIC_API_DISABLED=false
-POSTGRES_PORT=5432  # Optional, defaults to 5432
-```
-
-### Example init-dbs.sql
-```sql
--- Create databases for n8n and application use
--- Note: n8n database is created by Docker environment, so we skip it
-CREATE DATABASE cribops_memory;
-CREATE DATABASE cribops_crm;
-CREATE DATABASE cribops_rag;
-
--- Grant all privileges on the databases to postgres user (already superuser, but being explicit)
-GRANT ALL PRIVILEGES ON DATABASE n8n TO postgres;
-GRANT ALL PRIVILEGES ON DATABASE cribops_memory TO postgres;
-GRANT ALL PRIVILEGES ON DATABASE cribops_crm TO postgres;
-GRANT ALL PRIVILEGES ON DATABASE cribops_rag TO postgres;
-```
-
----
-
-## Docker Compose Commands
-
-After generating your `compose.yaml` and secret files, you can use Docker Compose to manage your services. Here are some common commands:
-
-- **Run in Foreground:**  
-  ```bash
+  Features:
+  - Private database (no internet access)
+  - SSM tunneling through bastion host
+  - Works with TablePlus, pgAdmin, or any PostgreSQL client
+  - Automatic credential retrieval from AWS Secrets Manager
+  - Session Manager plugin auto-installation guide
+
+  🎯 Production Operations
+
+  # Infrastructure management
+  cribops-cli deploy aws init      # Create infrastructure
+  cribops-cli deploy aws status    # Monitor deployment
+  cribops-cli deploy aws destroy   # Clean teardown
+
+  # Service operations  
+  cribops-cli deploy aws scale 0   # Scale down (maintenance)
+  cribops-cli deploy aws scale 3   # Scale up (high traffic)
+  cribops-cli deploy aws redeploy  # Update with new versions
+
+  # Database access
+  cribops-cli deploy aws db connect              # Secure tunnel
+  cribops-cli deploy aws db connect --auto-open  # Auto-launch TablePlus
+
+  ---
+  🐳 Local Development Setup
+
+  Perfect for development, testing, and small-scale deployments.
+
+  Getting Started Locally
+
+  # Basic local setup
+  cribops-cli setup
+
+  # Setup with custom ports (multiple instances)
+  cribops-cli setup --n8n-port 5679 --postgres-port 5433
+
+  # Setup with Cloudflare tunnel (public webhooks)
+  cribops-cli setup --cloudflare-tunnel --tunnel-hostname n8n.yourdomain.com
+
+  ---
+  Cloudflare Tunnel Setup
+
+  Expose your local n8n instance securely to the internet for webhooks without port forwarding!
+
+  Prerequisites
+
+  1. Install cloudflared:
+    - macOS: brew install cloudflared
+    - Windows: Download from https://github.com/cloudflare/cloudflared/releases
+    - Linux: wget -q https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64.deb && sudo dpkg -i cloudflared-linux-amd64.deb
+  2. Have a domain managed by Cloudflare
+
+  Quick Setup
+
+  # Interactive setup (prompts for tunnel name and hostname)
+  cribops-cli setup --cloudflare-tunnel
+
+  # One-line setup (no prompts!)
+  cribops-cli setup --cloudflare-tunnel --tunnel-name my-n8n --tunnel-hostname n8n.example.com
+
+  # Multiple instances with different ports and tunnels
+  cribops-cli setup --n8n-port 5679 --postgres-port 5433 --cloudflare-tunnel --tunnel-name n8n-dev --tunnel-hostname n8n-dev.example.com
+
+  ---
+  Database Management
+
+  CribOps CLI creates 4 pre-configured PostgreSQL databases with n8n credentials ready to use:
+
+  Available Databases
+
+  - n8n - System database for workflows and credentials
+  - cribops_memory - Long-term memory storage for AI agents
+  - cribops_crm - Customer relationship management data
+  - cribops_rag - Vector storage for RAG (Retrieval Augmented Generation)
+
+  Local Database Access (TablePlus Integration)
+
+  # Open default n8n database
+  cribops-cli db open
+
+  # Open specific database
+  cribops-cli db open memory
+  cribops-cli db open crm
+  cribops-cli db open rag
+
+  # List all available databases
+  cribops-cli db list
+
+  AWS Database Access (Secure SSM Tunneling)
+
+  # Connect to AWS database with auto-open TablePlus
+  cribops-cli deploy aws db connect --auto-open
+
+  # Connect on specific port
+  cribops-cli deploy aws db connect --port 5433
+
+  # Connect to specific stack
+  cribops-cli deploy aws db connect my-stack-name
+
+  API-Based Credential Setup
+
+  # Create credentials using n8n API key
+  cribops-cli db setup-credentials YOUR_API_KEY
+
+  ---
+  Expected Output
+
+  AWS Deployment Output
+
+  🚀 AWS Infrastructure Deployment
+  ================================
+  Domain: n8n.yourdomain.com
+  Region: us-east-1
+
+  ⚡ Deployment Progress:
+  ✅ CloudFormation template generated: n8n-infrastructure-yourdomain-com.yaml
+  ✅ Template validation passed
+  ✅ Infrastructure deployment started
+  ✅ VPC and networking created
+  ✅ Database cluster provisioned
+  ✅ ECS services launched
+  ✅ Load balancer configured
+  ✅ DNS records updated
+
+  🔐 Database Security:
+    • Database deployed in private subnets (VPC only access)
+    • Access via secure SSM tunneling through bastion instance
+    • No public internet access to database
+    • Perfect for TablePlus and other database tools
+
+  📝 Next steps:
+     1. Configure your domain DNS to point to the load balancer
+     2. Access your N8N instance at: https://n8n.yourdomain.com
+     3. Use 'cribops-cli db connect' to access the database securely via SSM tunneling
+
+  ✅ AWS infrastructure deployed successfully!
+
+  Local Development Files
+
+  .
+  ├── compose.yaml                      # Docker Compose configuration
+  ├── .env                              # Environment variables
+  ├── .gitignore                        # Updated with secrets/, .env, and local files
+  ├── init-dbs.sql                      # Database initialization (creates 4 databases)
+  ├── secrets/                          # Directory containing secrets
+  │   └── .postgrespassword             # PostgreSQL password file
+  └── (Optional with Cloudflare tunnel)
+      ├── [tunnel-name]-config.yml      # Tunnel configuration
+      └── .cloudflared-[tunnel-name].json  # Local tunnel credentials
+
+  ---
+  Docker Compose Commands
+
+  After generating your compose.yaml and secret files, manage your local services:
+
+  - Run in Foreground:
   docker compose up
-  ```
-  This starts all services and streams the logs to your console.
-
-- **Run in Detached Mode:**  
-  ```bash
+  - Run in Detached Mode:
   docker compose up -d
-  ```
-  This starts the services in the background.
-
-- **Stop Containers:**  
-  ```bash
+  - Stop Containers:
   docker compose stop
-  ```
-  This stops all running containers without removing them.
-
-- **Take Down Containers and Network:**  
-  ```bash
+  - Take Down Containers:
   docker compose down
-  ```
-  This stops containers and removes the containers, networks, and any created volumes associated with the project.
-
-- **View Logs:**  
-  ```bash
-  docker compose logs
-  ```
-  To follow logs in real time, use:
-  ```bash
+  - View Logs:
   docker compose logs -f
-  ```
 
-- **Check Cloudflare Tunnel Status:**
-  ```bash
-  docker compose logs cloudflared
-  ```
+  ---
+  Troubleshooting & Support
 
-*Note:* If you're using the legacy Docker Compose (version 1), replace `docker compose` with `docker-compose`.
+  AWS Deployment Issues
 
----
+  Missing AWS Session Manager Plugin:
+  # macOS
+  brew install --cask session-manager-plugin
 
-## Troubleshooting & Support
+  # The CLI will provide installation instructions for other platforms
 
-### Common Issues
+  Database Connection Issues:
+  - Ensure the Session Manager plugin is installed
+  - Verify AWS credentials have appropriate permissions
+  - Check stack status: cribops-cli deploy aws status
 
-**Cloudflare Tunnel Issues:**
-- If cloudflared is not installed, the CLI will provide platform-specific installation instructions
-- For DNS issues, ensure your domain is active in Cloudflare
-- Check tunnel status with `docker compose logs cloudflared`
-- **Error 1033 Fix:** The CLI now automatically refreshes DNS routes when reusing existing tunnels
+  Deployment Failures:
+  - Review CloudFormation events in AWS Console
+  - Ensure domain is configured in Route 53
+  - Verify AWS service limits and quotas
 
-**Database Connection Issues:**
-- Ensure Docker is running before setup
-- Check PostgreSQL logs: `docker compose logs postgres`
-- Verify credentials in `.env` file
+  Local Development Issues
 
-**TablePlus Connection Issues:**
-- If TablePlus doesn't open, install from [tableplus.com](https://tableplus.com/download)
-- Manual connection URL is provided as fallback
-- Password is stored in `.env` file
+  Database Connection Issues:
+  - Ensure Docker is running before setup
+  - Check PostgreSQL logs: docker compose logs postgres
+  - Verify credentials in .env file
 
-**Multiple Instance Setup:**
-- Use different ports with `--n8n-port` flag
-- Each instance needs its own directory
-- Cloudflare tunnels must have unique names
+  Cloudflare Tunnel Issues:
+  - Ensure cloudflared is installed and authenticated
+  - Check tunnel status: docker compose logs cloudflared
+  - Verify domain is active in Cloudflare
 
-### Getting Help
-- Join our community [Crib Ops on Skool](https://skool.com/cribops)
-- Check the [Cloudflare Tunnel Guide](CLOUDFLARE_TUNNEL_GUIDE.md) for detailed tunnel setup
-- View all options with `cribops-cli --help`
+  Getting Help
 
----
+  - Join our community https://skool.com/cribops
+  - View all options with cribops-cli --help
+  - For AWS issues, check cribops-cli deploy aws status
 
-## Recent Changes (v2.13.3)
+  ---
+  Recent Changes
 
-### New Features
-- **API-based credential setup:** Create PostgreSQL credentials via n8n API with `db setup-credentials`
-- **Custom PostgreSQL port:** Use `--postgres-port` flag for external database access
-- **Improved tunnel handling:** Automatic DNS route refresh fixes Error 1033 for existing tunnels
-- **Local credential storage:** Tunnel credentials stored locally for better portability
+  🆕 Major New Features (v2.31.0)
 
-### Bug Fixes
-- Fixed tunnel UUID extraction for new Cloudflare output format
-- Fixed database initialization preventing container startup
-- Fixed tunnel configuration to always use internal port 5678
-- Fixed credential path issues by using local storage
-- Added automatic database creation when using API setup
+  - 🏗️ Complete AWS Cloud Deployment: One-command infrastructure setup with deploy aws init
+  - 📊 Real-time AWS Monitoring: Live deployment status with deploy aws status
+  - 🔒 Secure Database Access: Private database with SSM tunneling via deploy aws db connect
+  - ⚡ Production Operations: Zero-downtime scaling and redeployments
+  - 💰 Cost-Optimized Architecture: Enterprise-grade infrastructure starting ~$50/month
 
-### Improvements
-- TablePlus integration now respects custom PostgreSQL ports
-- Better error messages and recovery for tunnel setup
-- Cleaner compose file generation with proper credential mounting
+  Previous Features (v2.13.3)
 
----
+  - API-based credential setup: Create PostgreSQL credentials via n8n API
+  - Custom PostgreSQL port: External database access with --postgres-port
+  - Improved tunnel handling: Automatic DNS route refresh fixes Error 1033
+  - Local credential storage: Better tunnel credential portability
 
-By following this guide, you should be able to configure your environment quickly and securely with all the new powerful features. Enjoy using Crib Ops CLI!
+  ---
+  Ready to scale to production? Try cribops-cli deploy aws init and have your enterprise N8N infrastructure running in minutes!
+
+  Starting with local development? Use cribops-cli setup for the fastest local installation.
+
+  By following this guide, you can deploy N8N anywhere from local development to production AWS infrastructure. Enjoy using Crib Ops CLI!
