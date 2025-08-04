@@ -134,7 +134,7 @@
   💰 Cost-Optimized Architecture
 
   Starting from approximately $50-80/month for production workloads:
-  - Aurora Serverless PostgreSQL
+  - Aurora PostgreSQL
   - ECS Fargate containers (pay per use)
   - Application Load Balancer
   - Minimal data transfer costs
