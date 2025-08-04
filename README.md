@@ -40,7 +40,7 @@
   - Real-time deployment monitoring with live status updates
   - Zero-downtime operations including scaling and redeployments
   - Automatic SSL certificates and DNS management
-  - Cost-optimized architecture starting from ~$50/month
+  - Cost-optimized architecture starting from ~$112/month
 
   The CLI is free to download from this repository in the downloads folder. Installer for Windows and Mac. Or just use the docker run commands listed below to run it instantly with no install.
 
