@@ -6,7 +6,8 @@
 
   N8N Easy Install & AWS Cloud Deployment
 
-  https://youtu.be/OEyuTy4KauA?si=F2J7pT4n8iiU0efZ
+  [![Watch the video](https://img.youtube.com/vi/OEyuTy4KauA/hqdefault.jpg)](https://youtu.be/OEyuTy4KauA?si=F2J7pT4n8iiU0efZ)
+
 
   Downloads
 
