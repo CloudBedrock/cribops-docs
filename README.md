@@ -14,7 +14,7 @@
   For users of different operating systems, we provide specific builds of CribOps CLI. Choose the one that matches your system:
 
   - MacOS Version
-    - https://github.com/cloudbedrock/cribops-docs/raw/main/downloads/cribops-cli-mac-2.30.8.zip
+    - https://github.com/cloudbedrock/cribops-docs/raw/main/downloads/cribops-cli-mac-2.30.9.zip
   - Windows Version
     - https://github.com/cloudbedrock/cribops-docs/raw/main/downloads/cribops-cli-windows-2.30.8.zip
 
