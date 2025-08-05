@@ -16,7 +16,7 @@
   - MacOS Version
     - https://github.com/cloudbedrock/cribops-docs/raw/main/downloads/cribops-cli-mac-2.30.9.zip
   - Windows Version
-    - https://github.com/cloudbedrock/cribops-docs/raw/main/downloads/cribops-cli-windows-2.30.8.zip
+    - https://github.com/cloudbedrock/cribops-docs/raw/main/downloads/cribops-cli-windows-2.30.9.zip
 
   The CLI tool now supports:
 
