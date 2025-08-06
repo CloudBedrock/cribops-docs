@@ -235,7 +235,7 @@ cribops-cli aws db connect --auto-open
 
 ### 💰 Cost-Optimized Architecture
 
-Starting from approximately $50-80/month for production workloads:
+Starting from approximately $112-179/month for production workloads:
 - Aurora PostgreSQL
 - ECS Fargate containers (pay per use)
 - Application Load Balancer
