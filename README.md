@@ -13,9 +13,9 @@ Need more help? Join our new community https://skool.com/cribops
 For users of different operating systems, we provide specific builds of CribOps CLI. Choose the one that matches your system:
 
 - **MacOS Version**
-  - https://github.com/cloudbedrock/cribops-docs/raw/main/downloads/cribops-cli-mac-3.7.6.zip
+    - https://github.com/cloudbedrock/cribops-docs/raw/main/downloads/cribops-cli-mac-3.7.6.zip
 - **Windows Version**
-  - https://github.com/cloudbedrock/cribops-docs/raw/main/downloads/cribops-cli-windows-3.7.6.zip
+    - https://github.com/cloudbedrock/cribops-docs/raw/main/downloads/cribops-cli-windows-3.7.6.zip
 
 The CLI tool now supports:
 
@@ -43,6 +43,8 @@ The CLI tool now supports:
 - **🆕 N8N Credential Integration**: Automatic PostgreSQL credential setup in n8n for all databases
 - **🆕 Smart DNS Management**: Automatic hosted zone detection with manual DNS setup guidance
 - **🆕 Accurate ALB Information**: Real-time load balancer DNS name retrieval for CNAME setup
+- **🆕 DNS Migration Tools**: Comprehensive DNS record discovery and Route53 import for domain migration
+- **🆕 cPanel Integration**: Automatic detection of cPanel hosting records including DKIM, DMARC, and subdomains
 - Cost-optimized architecture starting from ~$112/month *OnDemand - Significant savings using reserved pricing from AWS (Note No Need for Postgres Database or Vector as included)
 
 The CLI is free to download from this repository in the downloads folder. Installer for Windows and Mac. Or just use the docker run commands listed below to run it instantly with no install.
@@ -131,9 +133,49 @@ cribops-cli aws db setup-credentials --stack-name my-n8n --region us-west-2
 - RAG (Retrieval Augmented Generation) workflows
 - Multi-database n8n workflows
 
-### 🆕 NEW: Smart DNS Management
+### 🆕 NEW: DNS Migration & Management
 
-The CLI now provides intelligent DNS management with multiple options:
+The CLI provides comprehensive DNS management including automatic migration from existing hosting providers to Route53:
+
+#### **🚀 Full DNS Migration (cPanel/Hosting → Route53)**
+Migrate your entire domain from cPanel or other hosting providers to Route53:
+```bash
+# Deploy with automatic DNS migration
+cribops-cli aws init --domain n8n.example.com --migrate-dns
+
+# Migration discovers and imports:
+# ✅ Root domain records (A, MX, TXT, SPF)
+# ✅ All cPanel subdomains (cpanel, whm, webmail, ftp, webdisk)
+# ✅ Email security (DKIM, DMARC, autoconfig, autodiscover)
+# ✅ Calendar/contacts subdomains (cpcalendars, cpcontacts)
+```
+
+**What gets migrated automatically:**
+- **Root Domain**: A records, MX (email), TXT (SPF), NS records
+- **cPanel Subdomains**: cpanel, whm, webmail, ftp, webdisk, cpcalendars, cpcontacts
+- **Email Security**: DKIM keys, DMARC policies, autoconfig, autodiscover
+- **Web Subdomains**: www, mail (CNAME redirects to main domain)
+- **All discovered A, CNAME, TXT records** with proper conflict resolution
+
+**Migration Process:**
+1. **Discovery**: Scans existing DNS using multiple techniques
+2. **Validation**: Ensures record compatibility and resolves conflicts
+3. **Import**: Creates Route53 hosted zone and imports all records
+4. **Verification**: Confirms successful import and provides nameserver instructions
+
+#### **🔍 DNS Discovery Testing**
+Test what records will be discovered before migration:
+```bash
+# Preview DNS records that would be migrated
+cribops-cli aws dns discover example.com
+
+# Example output shows all discoverable records:
+# ✅ Found 19 DNS records:
+#   • Root: A, MX, TXT (SPF)
+#   • cPanel: cpanel, whm, webmail, ftp, webdisk
+#   • Email: DKIM, DMARC, autoconfig, autodiscover
+#   • Web: www, mail (CNAMEs)
+```
 
 #### **Automatic Route 53 Setup (Recommended)**
 If you have a Route 53 hosted zone:
@@ -313,9 +355,9 @@ Expose your local n8n instance securely to the internet for webhooks without por
 ### Prerequisites
 
 1. **Install cloudflared:**
-   - **macOS:** `brew install cloudflared`
-   - **Windows:** Download from https://github.com/cloudflare/cloudflared/releases
-   - **Linux:** `wget -q https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64.deb && sudo dpkg -i cloudflared-linux-amd64.deb`
+    - **macOS:** `brew install cloudflared`
+    - **Windows:** Download from https://github.com/cloudflare/cloudflared/releases
+    - **Linux:** `wget -q https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64.deb && sudo dpkg -i cloudflared-linux-amd64.deb`
 2. Have a domain managed by Cloudflare
 
 ### Quick Setup
@@ -427,6 +469,68 @@ cribops-cli aws db setup-credentials https://n8n.yourdomain.com YOUR_API_KEY
   • Use 'cribops-cli deploy aws add-node' to add more instances
   • Check CloudWatch logs for detailed service information
   • Update DNS records if domains are not resolving
+```
+
+### 🆕 DNS Migration Output
+
+```
+🔍 DNS Migration & Route53 Setup
+================================
+Domain: example.com
+Migration Mode: Full DNS Migration
+
+🔎 Discovering existing DNS records...
+📋 Found 19 DNS records from current hosting:
+
+Root Domain (example.com):
+✅ A      example.com                98.84.255.176
+✅ MX     example.com                0 example.com.
+✅ TXT    example.com                "v=spf1 +a +mx +ip4:98.84.255.176 ~all"
+
+Web Services:
+✅ CNAME  www.example.com           example.com.
+✅ CNAME  mail.example.com          example.com.
+
+cPanel Hosting:
+✅ A      cpanel.example.com         98.84.255.176
+✅ A      whm.example.com            98.84.255.176
+✅ A      webmail.example.com        98.84.255.176
+✅ A      ftp.example.com            98.84.255.176
+✅ A      webdisk.example.com        98.84.255.176
+✅ A      cpcalendars.example.com    98.84.255.176
+✅ A      cpcontacts.example.com     98.84.255.176
+
+Email Security:
+✅ A      autoconfig.example.com     98.84.255.176
+✅ A      autodiscover.example.com   98.84.255.176
+✅ TXT    _dmarc.example.com         "v=DMARC1; p=none;"
+✅ TXT    default._domainkey.example.com  "v=DKIM1; k=rsa; p=MIIBIjAN..."
+
+🚀 Creating Route53 hosted zone...
+✅ Created hosted zone: example.com (Z1D633PJN98FT9)
+
+📦 Importing DNS records to Route53...
+⚠️  Skipping duplicate CNAME for name: www.example.com
+✅ Final record count after deduplication: 19
+
+Batch 1-10 (10 records): ✅ SUCCESS  
+Batch 2-9 (9 records): ✅ SUCCESS
+
+📊 Migration Results:
+✅ Successfully imported 19/19 DNS records
+✅ All critical records migrated (A, MX, TXT, CNAME)
+✅ All cPanel subdomains preserved
+✅ Email security records intact (DKIM, DMARC)
+
+🔄 Nameserver Update Required:
+Update your domain registrar to use these Route53 nameservers:
+  • ns-200.awsdns-25.com
+  • ns-670.awsdns-19.net
+  • ns-1797.awsdns-32.co.uk
+  • ns-1480.awsdns-57.org
+
+⏱️  DNS propagation: 24-48 hours
+💡 Your N8N will work immediately, migrate nameservers when convenient
 ```
 
 ### 🆕 AWS Database Setup Output
@@ -642,6 +746,13 @@ brew install --cask session-manager-plugin
 - For external DNS providers, ensure CNAME record points to exact ALB DNS name shown in status
 - Wait 1-5 minutes for DNS propagation (up to 24 hours for some providers)
 
+**DNS Migration Issues:**
+- **Discovery Problems**: If fewer records found than expected, check current nameservers point to hosting provider
+- **Import Failures**: Route53 batch errors usually indicate duplicate records - CLI handles this automatically
+- **Missing Records**: Use `cribops-cli aws dns discover example.com` to preview what will be migrated
+- **CNAME Conflicts**: CLI automatically resolves DNS conflicts (only one CNAME per name allowed)
+- **Email Security**: DKIM/DMARC records require underscore domains (_dmarc, _domainkey) - CLI handles automatically
+
 **Deployment Failures:**
 - Review CloudFormation events in AWS Console
 - Ensure domain is configured in Route 53 (or manual DNS setup completed)
@@ -669,10 +780,20 @@ brew install --cask session-manager-plugin
 ---
 ## Recent Changes
 
-### 🆕 Major New Features (v3.2.1)
+### 🆕 Major New Features (v3.7.6)
+
+- 🌐 **DNS Migration Tools**: Complete DNS record discovery and Route53 import for seamless domain migration
+- 🏗️ **cPanel Integration**: Automatic detection of cPanel hosting environments with comprehensive subdomain discovery
+- 🔒 **Email Security Migration**: DKIM, DMARC, autoconfig, and autodiscover record preservation
+- 📊 **Smart Conflict Resolution**: Automatic handling of CNAME conflicts and duplicate record detection
+- 🔍 **Enhanced Discovery**: Finds 19+ DNS records including calendar, contacts, and management subdomains
+- ⚡ **Batch Import Optimization**: Reliable Route53 record import with deduplication and error handling
+- 🎯 **Migration Preview**: Test DNS discovery before actual migration with detailed record listing
+
+### Previous Major Features (v3.2.1)
 
 - 🗃️ **AWS RDS Database Setup**: Automated creation of memory, CRM, and RAG databases in Aurora PostgreSQL
-- 🧠 **pgvector Support**: Automatic pgvector extension enablement for AI/vector operations in RAG database  
+- 🧠 **pgvector Support**: Automatic pgvector extension enablement for AI/vector operations in RAG database
 - 🔑 **N8N Credential Integration**: Automatic PostgreSQL credential creation in n8n for all databases
 - 🔄 **Credential Rotation**: Smart detection and rotation of existing CribOps credentials
 - 🛡️ **SSL Certificate Handling**: Proper RDS SSL connection handling with allowUnauthorizedCerts
@@ -704,8 +825,10 @@ brew install --cask session-manager-plugin
 
 **Ready for AI workflows?** Use `cribops-cli aws db setup-credentials` to add memory, CRM, and vector databases with pgvector!
 
-**Need help with DNS?** The CLI now provides step-by-step instructions for all major DNS providers and automatically detects the correct load balancer information.
+**Migrating from cPanel/hosting?** Use `cribops-cli aws init --migrate-dns` to automatically discover and migrate all your DNS records to Route53!
+
+**Need help with DNS?** The CLI now provides comprehensive DNS migration tools plus step-by-step instructions for all major DNS providers with automatic load balancer detection.
 
 **Starting with local development?** Use `cribops-cli setup` for the fastest local installation.
 
-By following this guide, you can deploy N8N anywhere from local development to production AWS infrastructure with complete database management and intelligent DNS setup. Enjoy using Crib Ops CLI!
+By following this guide, you can deploy N8N anywhere from local development to production AWS infrastructure with complete database management, intelligent DNS setup, and seamless domain migration from any hosting provider. Enjoy using Crib Ops CLI!
