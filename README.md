@@ -43,7 +43,7 @@ The CLI tool now supports:
 - **🆕 N8N Credential Integration**: Automatic PostgreSQL credential setup in n8n for all databases
 - **🆕 Smart DNS Management**: Automatic hosted zone detection with manual DNS setup guidance
 - **🆕 Accurate ALB Information**: Real-time load balancer DNS name retrieval for CNAME setup
-- Cost-optimized architecture starting from ~$50/month *OnDemand
+- Cost-optimized architecture starting from ~$112/month *OnDemand
 
 The CLI is free to download from this repository in the downloads folder. Installer for Windows and Mac. Or just use the docker run commands listed below to run it instantly with no install.
 
