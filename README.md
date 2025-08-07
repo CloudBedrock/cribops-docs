@@ -82,12 +82,12 @@ The CLI is free to download from this repository in the downloads folder. Instal
 
 3. **macOS/Linux:**
 ```bash
-docker run --rm -v "$(pwd):/app" -w /app ghcr.io/cloudbedrock/cribops-cli setup -h
+docker run --rm -v "$(pwd):/app" -w /app ghcr.io/cloudbedrock/cribops-cli -h
 ```
 
 4. **Windows Command Prompt:**
 ```cmd
-docker run --rm -v "%cd%:/app" -w /app ghcr.io/cloudbedrock/cribops-cli setup -h
+docker run --rm -v "%cd%:/app" -w /app ghcr.io/cloudbedrock/cribops-cli -h
 ```
 
 ---
