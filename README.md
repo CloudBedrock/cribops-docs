@@ -45,6 +45,7 @@ The CLI tool now supports:
 - **🆕 N8N Credential Integration**: Automatic PostgreSQL credential setup in n8n for all databases
 - **🆕 Smart DNS Management**: Automatic hosted zone detection with manual DNS setup guidance
 - **🆕 Accurate ALB Information**: Real-time load balancer DNS name retrieval for CNAME setup
+- **🆕 Auto-Update Scheduling**: Automated N8N updates with EventBridge scheduling for ECS deployments and RDS maintenance windows
 - **🆕 DNS Migration Tools**: Comprehensive DNS record discovery and Route53 import for domain migration
 - **🆕 cPanel Integration**: Automatic detection of cPanel hosting records including DKIM, DMARC, and subdomains
 - Cost-optimized architecture starting from ~$112/month *OnDemand - Significant savings using reserved pricing from AWS (Note No Need for Postgres Database or Vector as included)
@@ -164,6 +165,108 @@ cribops-cli aws init --domain n8n.example.com --migrate-dns
 2. **Validation**: Ensures record compatibility and resolves conflicts
 3. **Import**: Creates Route53 hosted zone and imports all records
 4. **Verification**: Confirms successful import and provides nameserver instructions
+
+### 🆕 NEW: Automated N8N Updates & Maintenance
+
+Keep your N8N instance automatically updated with the latest features and security patches using EventBridge scheduling!
+
+#### **⏰ Automated Update Scheduling**
+Set up fully automated N8N updates that run on your schedule with zero manual intervention:
+
+```bash
+# Setup auto-update infrastructure
+cribops-cli aws auto-update setup
+
+# Configure daily updates at 3 AM UTC
+cribops-cli aws auto-update schedule --update-schedule "0 3 * * *"
+
+# Configure weekly updates on Sunday at 2 AM in your timezone
+cribops-cli aws auto-update schedule --update-schedule "0 2 * * SUN" --timezone "America/New_York"
+
+# Setup RDS maintenance window (separate from ECS updates)
+cribops-cli aws auto-update schedule --rds-maintenance-window "tue:04:00-tue:05:00"
+
+# Configure both ECS and RDS schedules together
+cribops-cli aws auto-update schedule --update-schedule "0 2 * * SAT" --rds-maintenance-window "sun:04:00-sun:05:00"
+```
+
+**What gets updated automatically:**
+- **N8N Container**: Pulls latest n8n Docker image and performs zero-downtime rolling deployment
+- **Dependencies**: Updates all container dependencies and libraries
+- **Security Patches**: Automatic security updates for the underlying infrastructure
+- **Database Maintenance**: Optional RDS maintenance window scheduling for system updates
+
+**Update Process:**
+1. **EventBridge Trigger**: AWS EventBridge schedules trigger at configured times
+2. **Lambda Execution**: Lambda function performs the same steps as `cribops-cli aws redeploy`
+3. **Zero-Downtime Deployment**: ECS rolling update keeps service available (100% minimum healthy)
+4. **Health Monitoring**: Automatic rollback if new version fails health checks
+5. **Logging**: All update activities logged to CloudWatch for monitoring
+
+#### **🔧 Auto-Update Management**
+
+```bash
+# Check current auto-update status and schedules
+cribops-cli aws auto-update status
+
+# View auto-update execution logs (last 50 entries)
+cribops-cli aws auto-update logs
+
+# Temporarily disable auto-updates (keeps infrastructure, disables scheduling)
+cribops-cli aws auto-update disable
+
+# Re-enable with new schedule
+cribops-cli aws auto-update schedule --update-schedule "0 4 * * *"
+```
+
+#### **📊 Smart Scheduling Options**
+
+**Common Schedule Patterns:**
+- **Daily**: `"0 3 * * *"` - Every day at 3 AM UTC
+- **Weekly**: `"0 2 * * SUN"` - Every Sunday at 2 AM UTC  
+- **Bi-weekly**: `"0 2 1,15 * *"` - 1st and 15th of every month at 2 AM
+- **Monthly**: `"0 2 1 * *"` - First day of every month at 2 AM
+
+**Timezone Support:**
+All schedules support timezone specification for local time scheduling:
+```bash
+# Eastern Time scheduling
+--timezone "America/New_York"
+
+# Pacific Time scheduling  
+--timezone "America/Los_Angeles"
+
+# European scheduling
+--timezone "Europe/London"
+
+# UTC (default)
+--timezone "UTC"
+```
+
+**RDS Maintenance Windows:**
+- **Format**: `day:hh24:mi-day:hh24:mi` (e.g., `tue:04:00-tue:05:00`)
+- **Days**: `sun`, `mon`, `tue`, `wed`, `thu`, `fri`, `sat`
+- **Duration**: Must be at least 30 minutes
+- **Best Practice**: Schedule during low-traffic periods, separate from ECS updates
+
+#### **🛡️ Safety & Reliability Features**
+
+**Zero-Downtime Updates:**
+- **Rolling Deployment**: New containers start before old ones stop
+- **Health Checks**: Automatic validation of new deployment before traffic switch
+- **Automatic Rollback**: Fails back to previous version if health checks fail
+- **Load Balancer Integration**: Seamless traffic routing during updates
+
+**Infrastructure Protection:**
+- **Database Safety**: RDS maintenance windows are separate from application updates
+- **Persistent Data**: EFS volumes and database data preserved during updates
+- **SSL Certificates**: Domain certificates and DNS configuration unchanged
+- **Monitoring**: CloudWatch logs capture all update activities for troubleshooting
+
+**Failure Handling:**
+- **Retry Logic**: Failed updates automatically retry with exponential backoff
+- **Notification**: CloudWatch alerts can be configured for update failures
+- **Manual Override**: Manual deployments always possible via `cribops-cli aws redeploy`
 
 #### **🔍 DNS Discovery Testing**
 Test what records will be discovered before migration:
@@ -351,7 +454,7 @@ Before any changes are applied, the CLI shows exactly what will be modified:
 
 **Instance Size Scaling:**
 - **Small**: 256 CPU, 512 MB memory, db.t3.medium RDS
-- **Medium**: 512 CPU, 1024 MB memory, db.r5.large RDS  
+- **Medium**: 512 CPU, 1024 MB memory, db.r5.large RDS
 - **Large**: 1024 CPU, 2048 MB memory, db.r5.xlarge RDS
 
 **Update Process:**
@@ -427,6 +530,14 @@ cribops-cli aws redeploy  # Update with new versions
 cribops-cli aws db connect                          # Secure tunnel
 cribops-cli aws db connect --auto-open              # Auto-launch TablePlus
 cribops-cli aws db setup-credentials                # Create databases + n8n creds
+
+# 🆕 NEW: Auto-update operations
+cribops-cli aws auto-update setup                   # Setup auto-update infrastructure
+cribops-cli aws auto-update schedule --update-schedule "0 3 * * *"    # Daily at 3 AM UTC
+cribops-cli aws auto-update schedule --update-schedule "0 2 * * SUN" --timezone "America/New_York"  # Weekly in EST
+cribops-cli aws auto-update status                  # View current schedules
+cribops-cli aws auto-update logs                    # View execution logs
+cribops-cli aws auto-update disable                 # Temporarily disable
 ```
 
 ---
@@ -631,6 +742,47 @@ Update your domain registrar to use these Route53 nameservers:
 
 ⏱️  DNS propagation: 24-48 hours
 💡 Your N8N will work immediately, migrate nameservers when convenient
+```
+
+### 🆕 Auto-Update Status Output
+
+```
+⏰ Auto-Update Configuration Status
+==================================
+✅ Auto-update infrastructure: Active
+
+🤖 Lambda Function:
+   Name: my-n8n-stack-auto-update
+   Status: Active
+   Runtime: python3.9
+   Last Modified: 2025-08-10T15:30:00Z
+
+⏰ Automatic Update Schedule:
+   📅 Schedule: Daily at 3:00 AM UTC
+   🌍 Timezone: UTC
+   📋 Technical: cron(0 3 * * *)
+   ✅ Status: ENABLED
+   📊 Next Run: 2025-08-11T03:00:00Z
+
+💡 Management Commands:
+   • Change schedule: cribops-cli aws auto-update schedule my-n8n-stack --update-schedule "NEW_SCHEDULE"
+   • Disable updates: cribops-cli aws auto-update disable my-n8n-stack
+   • Manual update now: cribops-cli aws redeploy my-n8n-stack
+
+🗃️  RDS Maintenance Schedule:
+   📅 Window: Tuesday 04:00-05:00 UTC
+   🌍 Timezone: UTC
+   ✅ Status: Configured
+   📊 Next Window: 2025-08-12T04:00:00Z
+
+💡 Management Commands:
+   • Change window: cribops-cli aws auto-update schedule my-n8n-stack --rds-maintenance-window "NEW_WINDOW"
+
+💡 Tips:
+   • Auto-updates use zero-downtime rolling deployments
+   • RDS maintenance happens separately from container updates
+   • All executions are logged to CloudWatch
+   • Manual deployments are always possible
 ```
 
 ### 🆕 AWS Database Setup Output
@@ -867,6 +1019,15 @@ brew install --cask session-manager-plugin
 - **Permission Errors**: Ensure your AWS credentials have CloudFormation and RDS permissions
 - **Version Compatibility**: Updates require templates generated with CLI v3.8.6+ for dynamic parameter support
 
+**Auto-Update Issues:**
+- **Setup Failures**: Ensure your AWS credentials have Lambda, EventBridge, and CloudFormation permissions
+- **Schedule Not Working**: Verify EventBridge rule is enabled with `cribops-cli aws auto-update status`
+- **Update Failures**: Check CloudWatch logs with `cribops-cli aws auto-update logs`
+- **Lambda Timeout**: Auto-updates use the same logic as manual `redeploy` - check ECS service status
+- **RDS Maintenance Conflicts**: RDS windows are separate from ECS updates - coordinate schedules to avoid overlap
+- **Permission Errors**: Lambda needs ECS UpdateService permissions - handled automatically during setup
+- **Missing Infrastructure**: Run `cribops-cli aws auto-update setup` to create required Lambda and EventBridge resources
+
 ### Local Development Issues
 
 **Database Connection Issues:**
@@ -888,7 +1049,20 @@ brew install --cask session-manager-plugin
 ---
 ## Recent Changes
 
-### 🆕 Major New Features (v3.8.6)
+### 🆕 Major New Features (v3.9.12)
+
+- 🤖 **Automated N8N Updates**: Complete auto-update system with EventBridge scheduling for hands-free maintenance
+- ⏰ **Smart Scheduling**: Cron-based scheduling with timezone support for global deployment management
+- 🔄 **Zero-Downtime Auto-Updates**: Rolling ECS deployments triggered automatically on your schedule
+- 🗃️ **RDS Maintenance Scheduling**: Coordinate database maintenance windows with application updates
+- 📊 **CloudWatch Integration**: Complete logging and monitoring of all automated update activities
+- 🛡️ **Safety Controls**: Automatic rollback on failed updates with health check validation
+- 🎯 **Flexible Management**: Enable, disable, reschedule, and monitor auto-updates with simple commands
+- 📋 **Status Monitoring**: Real-time view of schedules, next execution times, and historical logs
+- 🌍 **Global Timezone Support**: Schedule updates in your local timezone for optimal maintenance windows
+- ⚡ **Lambda-Powered**: Lightweight, cost-effective execution with AWS Lambda and EventBridge
+
+### Previous Major Features (v3.8.6)
 
 - 🔄 **Dynamic Infrastructure Updates**: Scale AWS resources after deployment without rebuilding infrastructure
 - 📈 **Instance Size Scaling**: Update Fargate CPU/memory and RDS instance classes dynamically (small/medium/large)
@@ -944,6 +1118,8 @@ brew install --cask session-manager-plugin
 **Ready to scale to production?** Try `cribops-cli aws init` and have your enterprise N8N infrastructure running in minutes!
 
 **Ready for AI workflows?** Use `cribops-cli aws db setup-credentials` to add memory, CRM, and vector databases with pgvector!
+
+**Want hands-free maintenance?** Use `cribops-cli aws auto-update setup` to enable automated N8N updates with zero-downtime deployments!
 
 **Migrating from cPanel/hosting?** Use `cribops-cli aws init --migrate-dns` to automatically discover and migrate all your DNS records to Route53!
 
