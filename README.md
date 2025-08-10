@@ -278,11 +278,103 @@ cribops-cli aws db connect --auto-open
 ### 💰 Cost-Optimized Architecture
 
 Starting from approximately $112-179/month for production workloads:
-- Aurora PostgreSQL
-- ECS Fargate containers (pay per use)
+- Aurora PostgreSQL (single instance or HA with reader)
+- ECS Fargate containers (pay per use, scalable CPU/memory)
 - Application Load Balancer
 - Minimal data transfer costs
 - No NAT gateway fees (optimized routing)
+
+**🆕 Dynamic Scaling Benefits:**
+- Start small and scale up as needed
+- High Availability mode doubles RDS costs but provides 99.99% uptime
+- Instance sizing (small → large) scales both Fargate and RDS performance
+- Cost-efficient scaling without infrastructure rebuild
+
+### 🆕 **NEW: Dynamic Infrastructure Updates**
+
+Scale your AWS infrastructure after deployment without rebuilding! Update Fargate instance sizes and enable High Availability with change set previews.
+
+#### **🔄 Infrastructure Parameter Updates**
+
+```bash
+# Enable High Availability (adds second RDS instance)
+cribops-cli aws update --high-availability
+
+# Scale instance sizes (affects both Fargate and RDS)
+cribops-cli aws update --instance-size large        # Scale up for performance
+cribops-cli aws update --instance-size medium       # Balanced performance/cost
+cribops-cli aws update --instance-size small        # Cost optimization
+
+# Update specific stack
+cribops-cli aws update my-n8n-stack --high-availability
+
+# Update multiple parameters
+cribops-cli aws update --instance-size large --high-availability
+```
+
+#### **✅ Change Set Preview & Safety**
+
+Before any changes are applied, the CLI shows exactly what will be modified:
+
+```
+🔍 Planned Infrastructure Changes:
+===================================
+
+1. RDSInstance2: AWS::RDS::DBInstance
+   Action: Add
+
+2. RDSInstance1: AWS::RDS::DBInstance  
+   Action: Modify
+   Replacement: False
+   Changes:
+     • DBInstanceClass
+
+3. TaskDefinition: AWS::ECS::TaskDefinition
+   Action: Modify
+   Replacement: True
+   Changes:
+     • Cpu
+     • Memory
+
+❓ Execute these changes? (y/N):
+```
+
+#### **🏗️ What Gets Updated**
+
+**High Availability Mode:**
+- **Adds RDSInstance2**: Aurora PostgreSQL reader instance for failover
+- **Multi-AZ deployment**: 99.99% uptime SLA
+- **Automatic failover**: No manual intervention required
+- **Approximately doubles RDS costs** but provides enterprise-grade availability
+
+**Instance Size Scaling:**
+- **Small**: 256 CPU, 512 MB memory, db.t3.medium RDS
+- **Medium**: 512 CPU, 1024 MB memory, db.r5.large RDS  
+- **Large**: 1024 CPU, 2048 MB memory, db.r5.xlarge RDS
+
+**Update Process:**
+- **CloudFormation change sets**: Preview changes before execution
+- **Rolling updates**: Zero downtime for ECS services
+- **RDS scaling**: Brief restart possible for instance class changes
+- **Resource protection**: EFS, VPC, SSL certificates preserved
+- **Estimated duration**: 5-20 minutes depending on changes
+
+#### **💡 Update Benefits**
+
+**Cost Optimization:**
+- Start with small instances and scale up as needed
+- No infrastructure rebuild required
+- Pay only for resources you use
+
+**Performance Scaling:**
+- Scale Fargate CPU/memory for demanding workflows
+- Upgrade RDS instance classes for database performance
+- Both scale together automatically
+
+**High Availability:**
+- Add HA mode when ready for production
+- Enterprise-grade 99.99% uptime
+- Automatic failover with no data loss
 
 ### 🔒 Secure Database Access
 
@@ -317,6 +409,12 @@ cribops-cli aws db connect --show-password
 cribops-cli aws init      # Create infrastructure
 cribops-cli aws status    # Monitor deployment with DNS info
 cribops-cli aws destroy   # Clean teardown
+
+# 🆕 NEW: Dynamic Infrastructure Updates
+cribops-cli aws update --high-availability          # Add second RDS instance for HA
+cribops-cli aws update --instance-size large        # Scale Fargate CPU/memory + RDS
+cribops-cli aws update --instance-size medium       # Scale down for cost optimization
+cribops-cli aws update my-stack --high-availability # Update specific stack
 
 # Service operations  
 cribops-cli aws scale 0   # Scale down (maintenance)
@@ -759,6 +857,14 @@ brew install --cask session-manager-plugin
 - Verify AWS service limits and quotas
 - Check certificate validation status in ACM console
 
+**Infrastructure Update Issues:**
+- **Change Set Failures**: Use `cribops-cli aws update --help` to verify parameter syntax
+- **No Changes Detected**: Template may not support the parameter - ensure you're using the latest CLI version
+- **Update Timeout**: Large RDS instance changes can take 15-20 minutes, especially for HA mode
+- **Stack in UPDATE_ROLLBACK_COMPLETE**: Stack is in rollback state from previous failed update - updates should still work
+- **Permission Errors**: Ensure your AWS credentials have CloudFormation and RDS permissions
+- **Version Compatibility**: Updates require templates generated with CLI v3.8.6+ for dynamic parameter support
+
 ### Local Development Issues
 
 **Database Connection Issues:**
@@ -780,7 +886,19 @@ brew install --cask session-manager-plugin
 ---
 ## Recent Changes
 
-### 🆕 Major New Features (v3.7.6)
+### 🆕 Major New Features (v3.8.6)
+
+- 🔄 **Dynamic Infrastructure Updates**: Scale AWS resources after deployment without rebuilding infrastructure
+- 📈 **Instance Size Scaling**: Update Fargate CPU/memory and RDS instance classes dynamically (small/medium/large)
+- 🏗️ **High Availability Toggle**: Add/remove second RDS instance for enterprise-grade 99.99% uptime
+- 👁️ **Change Set Previews**: See exactly what resources will be modified before applying changes
+- 🛡️ **Resource Protection**: EFS, VPC, SSL certificates and data are fully preserved during updates
+- ⚡ **Zero-Downtime Scaling**: Rolling ECS updates with automatic traffic management
+- 💰 **Cost Optimization**: Start small and scale up as needed, or scale down to save costs
+- 🎯 **Stack-Specific Updates**: Update specific deployments by name or auto-detect
+- 📊 **Real-Time Monitoring**: Track update progress with live CloudFormation status
+
+### Previous Major Features (v3.7.6)
 
 - 🌐 **DNS Migration Tools**: Complete DNS record discovery and Route53 import for seamless domain migration
 - 🏗️ **cPanel Integration**: Automatic detection of cPanel hosting environments with comprehensive subdomain discovery
