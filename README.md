@@ -127,7 +127,9 @@ cribops-cli aws db setup-credentials --stack-name my-n8n --region us-west-2
 - **cribops_memory**: Caching, sessions, and temporary data storage
 - **cribops_crm**: Empty database for custom CRM schema (you design it!)
 - **cribops_rag**: Vector database with pgvector extension for AI/RAG operations
-- **N8N Credentials**: Automatically creates "CribOps - [Database]" credentials in n8n
+- **N8N Database Credentials**: Automatically creates "CribOps - [Database]" credentials in n8n
+- **🆕 AWS IAM User**: Creates dedicated IAM user with access keys for N8N workflows
+- **🆕 AWS N8N Credential**: Automatically creates "CribOps - AWS" credential with IAM access keys
 
 **Perfect for:**
 - AI agent memory and context retention
@@ -135,6 +137,8 @@ cribops-cli aws db setup-credentials --stack-name my-n8n --region us-west-2
 - Vector search and embeddings
 - RAG (Retrieval Augmented Generation) workflows
 - Multi-database n8n workflows
+- AWS service integrations (S3, SES, SNS, SQS, Lambda)
+- Automated AWS workflows with secure credential management
 
 ### 🆕 NEW: DNS Migration & Management
 
@@ -223,7 +227,7 @@ cribops-cli aws auto-update schedule --update-schedule "0 4 * * *"
 
 **Common Schedule Patterns:**
 - **Daily**: `"0 3 * * *"` - Every day at 3 AM UTC
-- **Weekly**: `"0 2 * * SUN"` - Every Sunday at 2 AM UTC  
+- **Weekly**: `"0 2 * * SUN"` - Every Sunday at 2 AM UTC
 - **Bi-weekly**: `"0 2 1,15 * *"` - 1st and 15th of every month at 2 AM
 - **Monthly**: `"0 2 1 * *"` - First day of every month at 2 AM
 
@@ -676,6 +680,12 @@ cribops-cli aws db setup-credentials https://n8n.yourdomain.com YOUR_API_KEY
     Value: n8n-in-LoadBa-ABC123DEF456-789012345.us-east-1.elb.amazonaws.com
     TTL: 300 (5 minutes)
 
+🔑 IAM Users (N8N):
+  ✅ cribops-n8n-username-1754876783
+      Created: 2025-08-11 01:46:23
+      Access Key: AKIAQTLIMGNZZX67RQUY (Active)
+      🔗 Manage: https://console.aws.amazon.com/iam/home#/users/cribops-n8n-username-1754876783
+
 💡 Tips:
   • Use 'cribops-cli deploy aws add-node' to add more instances
   • Check CloudWatch logs for detailed service information
@@ -811,6 +821,13 @@ Update your domain registrar to use these Route53 nameservers:
    ✅ Created credential: CribOps - CRM
    Setting up credential: CribOps - RAG
    ✅ Created credential: CribOps - RAG
+☁️  Creating AWS IAM user and credentials...
+📝 Creating IAM user: cribops-n8n-username-1754876783
+📝 IAM user created with no policies attached
+   🔗 Add AWS policies as needed: https://console.aws.amazon.com/iam/home#/users/cribops-n8n-username-1754876783
+   💡 Common N8N policies: S3, SES, SNS, SQS, Lambda (attach based on your workflows)
+✅ AWS credential created in N8N successfully!
+✅ AWS IAM user created: cribops-n8n-username-1754876783
 
 ✅ AWS RDS database setup completed successfully!
 
@@ -825,8 +842,9 @@ Update your domain registrar to use these Route53 nameservers:
    • CribOps - Memory
    • CribOps - CRM
    • CribOps - RAG
+   • CribOps - AWS (IAM user with access keys)
 
-💡 You can now use these PostgreSQL credentials in your n8n workflows!
+💡 You can now use these PostgreSQL and AWS credentials in your n8n workflows!
 ```
 
 ### AWS Deployment Output with DNS Options
@@ -992,6 +1010,12 @@ brew install --cask session-manager-plugin
 - Check n8n logs for credential creation errors
 - Use `cribops-cli aws db setup-credentials --help` for examples
 
+**AWS IAM User Issues:**
+- Ensure your AWS credentials have IAM user creation permissions
+- IAM users are created with no policies for security - add permissions via AWS Console
+- Check `cribops-cli aws status` to view existing IAM users and management links
+- IAM users follow pattern: `cribops-n8n-{username}-{timestamp}` for uniqueness
+
 **DNS Resolution Issues:**
 - Verify DNS records are configured correctly using `cribops-cli aws status`
 - Check DNS propagation: `dig your-domain.com`
@@ -1048,6 +1072,17 @@ brew install --cask session-manager-plugin
 
 ---
 ## Recent Changes
+
+### 🆕 Latest Features (v3.10.1)
+
+- ☁️ **AWS IAM User Creation**: Automatic IAM user creation with access keys for N8N workflows during database setup
+- 🔑 **N8N AWS Credentials**: Automatic "CribOps - AWS" credential creation in N8N with IAM user access keys
+- 🔒 **Zero Presumptive Permissions**: IAM users created with no policies attached for maximum security control
+- 🔗 **Direct Console Management**: AWS Console links provided for easy IAM policy management
+- 🔄 **Credential Rotation**: AWS credentials automatically included in credential rotation process
+- 📊 **Status Integration**: AWS IAM user status and management links now shown in `cribops-cli aws status`
+- 🎯 **Unique Naming**: IAM usernames include system username and timestamp for multi-user environments
+- 💡 **Smart Guidance**: Provides direct links and policy recommendations for common N8N AWS workflows
 
 ### 🆕 Major New Features (v3.9.12)
 
