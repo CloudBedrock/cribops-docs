@@ -1073,6 +1073,9 @@ brew install --cask session-manager-plugin
 ---
 ## Recent Changes
 
+### 🆕 Latest Features (v3.12.4)
+- ☁️ **AWS Enabling healthz readiness healthchecks and metrics endpoint for n8n
+
 ### 🆕 Latest Features (v3.10.1)
 
 - ☁️ **AWS IAM User Creation**: Automatic IAM user creation with access keys for N8N workflows during database setup
