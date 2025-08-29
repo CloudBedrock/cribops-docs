@@ -1,7 +1,6 @@
-  {
-    "version": "1.2",
-    "buildNumber": 1,
-    "downloadURL":
-  "https://github.com/CloudBedrock/cribops-docs/raw/main/downloads/cribops-mac-1.2.0.dmg",
+{
+    "version": "1.2.0",
+    "buildNumber": 2,
+    "downloadURL": "https://github.com/CloudBedrock/cribops-docs/raw/main/downloads/cribops-mac-1.2.0.dmg",
     "releaseNotes": "What's new in this version"
-  }
+}
