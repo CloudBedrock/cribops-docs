@@ -4,9 +4,6 @@ Welcome to the CribOps CLI and now desktop tool! Deploy N8N locally with Docker 
 
 Manage multiple N8N deployments accross multiple AWS accounts with ease with our new MacOS desktop app.  Windows coming soon.  Currently windows is our original CLI only.
 
-<img width="2224" height="1728" alt="image" src="https://github.com/user-attachments/assets/fc842cf8-dda6-4513-ab77-fc1cb4a9a098" />
-
-
 Need more help? Join our new community https://skool.com/cribops
 
 ## N8N Easy Install & AWS Cloud Deployment
