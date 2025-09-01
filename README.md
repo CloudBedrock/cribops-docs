@@ -1,6 +1,8 @@
 # Crib Ops CLI Tool Documentation
 
-Welcome to the Crib Ops CLI tool! Deploy N8N locally with Docker or scale to production-ready AWS infrastructure with a single command.
+Welcome to the CribOps CLI and now desktop tool! Deploy N8N locally with Docker or scale to production-ready AWS infrastructure with a single command.
+
+Manage multiple N8N deployments accross multiple AWS accounts with ease with our new MacOS desktop app.  Windows coming soon.  Currently windows is our original CLI only.
 
 Need more help? Join our new community https://skool.com/cribops
 
