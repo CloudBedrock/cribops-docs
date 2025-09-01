@@ -6,6 +6,12 @@ Manage multiple N8N deployments accross multiple AWS accounts with ease with our
 
 <img width="2224" height="1728" alt="image" src="https://github.com/user-attachments/assets/0236cc1d-d47b-4137-8756-b8d09656ce14" />
 
+Automatic SSL Certificate Issue with Route 53 or simple copy paste DNS Validation
+<img width="1216" height="864" alt="image" src="https://github.com/user-attachments/assets/cbefb7a2-928f-40a2-b25a-550ad281dd03" />
+
+Visual Progress during automatic provisioning and deployment of N8N and with high availability and fault tolerance features. Zero downtime automatic updates and more!
+<img width="1216" height="864" alt="image" src="https://github.com/user-attachments/assets/c2638b09-33d1-433d-9d0d-c34201bae387" />
+
 
 Need more help? Join our new community https://skool.com/cribops
 
