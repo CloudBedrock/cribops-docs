@@ -1,6 +1,6 @@
 {
     "version": "3.13.1",
     "buildNumber": 1,
-    "downloadURL": "https://github.com/CloudBedrock/cribops-docs/raw/main/downloads/cribops-mac-3.13.1.dmg",
+    "downloadURL": "http://media.cribops.com/release/macos/cribops-mac-3.13.1.dmg",
     "releaseNotes": "What's new in this version"
 }
