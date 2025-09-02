@@ -17,7 +17,7 @@ Need more help? Join our new community https://skool.com/cribops
 
 ## N8N Easy Install & AWS Cloud Deployment
 
-[![Watch the latest video](https://img.youtube.com/vi/e4JJIWC4Q0Q/hqdefault.jpg)](https://youtu.be/e4JJIWC4Q0Q)
+[![Watch the latest video](https://img.youtube.com/vi/H2TegSWlP0U/hqdefault.jpg)](https://youtu.be/H2TegSWlP0U)
 
 [![Watch the video on Local Docker Install With Cloudflare](https://img.youtube.com/vi/OEyuTy4KauA/hqdefault.jpg)](https://youtu.be/OEyuTy4KauA?si=F2J7pT4n8iiU0efZ)
 
