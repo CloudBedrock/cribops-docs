@@ -1,6 +1,6 @@
 {
-    "version": "3.14.3",
+    "version": "3.15.0",
     "buildNumber": 1,
-    "downloadURL": "https://media.cribops.com/release/macos/cribops-mac-3.14.3.dmg",
-    "releaseNotes": "Adding workspace and project file handling."
+    "downloadURL": "https://media.cribops.com/release/macos/cribops-mac-3.15.0.dmg",
+    "releaseNotes": "Adding workspace and project file handling state for deployments."
 }
