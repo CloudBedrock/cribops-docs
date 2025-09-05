@@ -1,6 +1,6 @@
 {
-    "version": "3.16.1",
+    "version": "3.18.0",
     "buildNumber": 1,
-    "downloadURL": "https://media.cribops.com/release/macos/cribops-mac-3.16.1.dmg",
+    "downloadURL": "https://media.cribops.com/release/macos/cribops-mac-3.18.0.dmg",
     "releaseNotes": "fix local db connect when using custom postgres port"
 }
